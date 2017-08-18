@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+    <ImageView
+        android:id="@+id/iv_header_layout_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@drawable/img"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/tv_header_layout_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_header_layout_email"
+        android:layout_alignLeft="@+id/tv_header_layout_email"
+        android:text="Esioner"
+        android:textColor="@color/colorAccent"
+        android:textSize="26sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_header_layout_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:text="12123123131@163.com"
+        android:textColor="@color/colorAccent"
+        android:textSize="22sp"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

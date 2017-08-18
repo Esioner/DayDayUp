@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_marginLeft="3dp"
+              android:layout_marginRight="3dp"
+              android:layout_width="match_parent"
+              android:background="@color/apricotYellow"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_one_article_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="这是一个标题"
+        android:gravity="center"
+        android:textSize="26sp"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="作者：莫言"
+        android:textStyle="bold"
+        android:id="@+id/tv_one_article_author"
+        android:layout_weight="0.5"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="18"
+        android:layout_height="0dp">
+
+        <TextView
+            android:id="@+id/tv_one_article_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lineSpacingMultiplier="1.5"
+            android:textSize="24sp"
+            android:text="@string/tv"
+            />
+    </ScrollView>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <TextView
+        android:id="@+id/tv_one_article_previous_day"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textSize="12sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="20170817"
+        />
+    <TextView
+        android:id="@+id/tv_one_article_current_day"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:text="20170818"
+        />
+    <TextView
+        android:id="@+id/tv_one_article_next_day"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="0.5"
+        android:textSize="12sp"
+        android:text="20170819"
+        />
+
+</LinearLayout>
+
+</LinearLayout>
