@@ -1,39 +1,11 @@
 package com.esioner.myapplication.oneDayOneArticle;
 
 
-public class JsonBean {
+import com.google.gson.annotations.SerializedName;
 
+public class JsonBean {
     public String author;
     public String content;
-
-    public class date {
-        public String currentDay;
-        public String nextDay;
-        public String previousDay;
-
-        public String getCurrentDay() {
-            return currentDay;
-        }
-        public void setCurrentDay(String currentDay) {
-            this.currentDay = currentDay;
-        }
-
-        public String getNextDay() {
-            return nextDay;
-        }
-
-        public void setNextDay(String nextDay) {
-            this.nextDay = nextDay;
-        }
-
-        public String getPreviousDay() {
-            return previousDay;
-        }
-
-        public void setPreviousDay(String previousDay) {
-            this.previousDay = previousDay;
-        }
-    }
 
     /**
      * 首段
@@ -81,4 +53,5 @@ public class JsonBean {
     public void setWc(int wc) {
         this.wc = wc;
     }
+
 }

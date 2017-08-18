@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.one_day_one_article:
                         OneDayOneArticleFragment fragment = new OneDayOneArticleFragment();
-                        transaction.add(R.id.fragment,fragment);
+                        transaction.replace(R.id.fragment,fragment);
                         transaction.commit();
                         drawerLayout.closeDrawers();
                         break;

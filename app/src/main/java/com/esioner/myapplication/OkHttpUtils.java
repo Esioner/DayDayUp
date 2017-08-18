@@ -3,6 +3,7 @@ package com.esioner.myapplication;
 
 import java.io.IOException;
 
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -33,6 +34,14 @@ public class OkHttpUtils {
                 .build();
         response = mClient.newCall(request).execute();
         return response;
+    }
+
+    public static void asyncGet(String url, Callback callback){
+        getInstance();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        mClient.newCall(request).enqueue(callback);
     }
 }
 
