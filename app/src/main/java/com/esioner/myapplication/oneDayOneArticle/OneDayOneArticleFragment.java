@@ -18,10 +18,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esioner.myapplication.ConstantValue;
+import com.esioner.myapplication.utils.ConstantValue;
 import com.esioner.myapplication.Datebase.MySQLiteOpenHelper;
 import com.esioner.myapplication.MyApplication;
-import com.esioner.myapplication.OkHttpUtils;
+import com.esioner.myapplication.utils.OkHttpUtils;
 import com.esioner.myapplication.R;
 import com.google.gson.Gson;
 
@@ -97,8 +97,6 @@ public class OneDayOneArticleFragment extends Fragment implements View.OnClickLi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         show();
-
-
     }
 
     public void show() {
@@ -134,7 +132,6 @@ public class OneDayOneArticleFragment extends Fragment implements View.OnClickLi
      * 将获得的文章中的
      * <p> 转换为一个 tab
      * </p> 转换为一个回车
-     *
      * @param text
      * @return
      */
