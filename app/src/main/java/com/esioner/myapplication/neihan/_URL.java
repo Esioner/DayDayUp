@@ -1,6 +1,7 @@
 package com.esioner.myapplication.neihan;
 
 import com.esioner.myapplication.MyApplication;
+import com.esioner.myapplication.utils.SPUtils;
 
 public class _URL {
     /**
@@ -15,7 +16,7 @@ public class _URL {
      */
     public static String URL_RECOMMEND = "http://iu.snssdk.com/neihan/stream/mix/v1/?";
     /**
-     *获取段友秀
+     * 获取段友秀
      */
     public static String URL_FRIEND_SHOW = "http://iu.snssdk.com/neihan/stream/mix/v1/";
     /**
@@ -26,17 +27,16 @@ public class _URL {
 
     /**
      * 拼接字符串
-     * @param contentType   从获取 content_type 中获取得到的 list_id 字段值。
-     * @param count         返回数量
-     * @param minTime       上次更新时间的 Unix 时间戳，秒为单位
-     * @param iid           一个长度为10的纯数字字符串，用于标识用户唯一性
-     * @param uuid          用户 id，一个长度为15的纯数字字符串
-     * @param openudid      一个长度为16的数字和小写字母混合字符串
+     *
+     * @param contentType 从获取 content_type 中获取得到的 list_id 字段值。
+     * @param count       返回数量
+     * @param minTime     上次更新时间的 Unix 时间戳，秒为单位
+     * @param iid         一个长度为10的纯数字字符串，用于标识用户唯一性
+     * @param uuid        用户 id，一个长度为15的纯数字字符串
+     * @param openudid    一个长度为16的数字和小写字母混合字符串
      * @return
      */
-    public static String getJointUrlParameter(String contentType, String count, String minTime,
-                                              int iid, String uuid, String
-                                                      openudid) {
+    public static String getJointUrlParameter(String contentType, String count, String minTime) {
         String suffixString = "webp=1" +          //固定值 1
                 "&essence=1" +      //固定值 1
                 "&content_type=" + contentType +    //从获取 content_type 中获取得到的 list_id 字段值。
@@ -49,9 +49,9 @@ public class _URL {
                 "&min_time=" + minTime +//上次更新时间的 Unix 时间戳，秒为单位
                 "&screen_width=" + MyApplication.getScreenWidth() +//屏幕宽度，px为单位
                 "&double_col_mode=0" +//固定值0
-                "&iid=" + iid +//一个长度为10的纯数字字符串，用于标识用户唯一性
+                "&iid=" + SPUtils.getString("iid") +//一个长度为10的纯数字字符串，用于标识用户唯一性
                 "&device_id=" + MyApplication.getDeviceId() +//设备 id，一个长度为11的纯数字字符串
-                "&ac=wifi"  +//网络环境，可取值 wifi
+                "&ac=wifi" +//网络环境，可取值 wifi
                 "&channel = 360" +//下载渠道，可360、tencent等
                 "&aid = 7" +//固定值7
                 "&app_name=joke_essay" +//固定值joke_essay
@@ -64,8 +64,8 @@ public class _URL {
                 "&device_brand=" + MyApplication.getManufacturer() +//设备品牌，例如 xiaomi
                 "&os_api=" + MyApplication.getOSCode() +//设备品牌，例如 xiaomi
                 "&os_version=" + MyApplication.getVersionCode() +//操作系统版本号，例如7.1.0
-                "&uuid=" + uuid +//用户 id，一个长度为15的纯数字字符串
-                "&openudid=" + openudid +//一个长度为16的数字和小写字母混合字符串
+                "&uuid=" + SPUtils.getString("uuid") +//用户 id，一个长度为15的纯数字字符串
+                "&openudid=" + SPUtils.getString("openudid") +//一个长度为16的数字和小写字母混合字符串
                 "&manifest_version_code=" + MyApplication.removePoint(MyApplication
                 .getVersionCode()) +//版本号去除小数点，例如612
                 "&resolution=" + MyApplication.getScreenHeight() + "*" + MyApplication
