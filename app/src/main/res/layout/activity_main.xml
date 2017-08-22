@@ -7,12 +7,18 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.esioner.myapplication.RootFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <!--<fragment-->
+        <!--android:id="@+id/fragment"-->
+        <!--android:name="com.esioner.myapplication.neihan.NeiHanFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
 
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

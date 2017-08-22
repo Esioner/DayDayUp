@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 
 import com.esioner.myapplication.neihan.NeiHanActivity;
+import com.esioner.myapplication.neihan.NeiHanFragment;
 import com.esioner.myapplication.oneDayOneArticle.OneDayOneArticleFragment;
 
 import java.text.DateFormat;
@@ -25,7 +26,6 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentTransaction transaction;
     private DrawerLayout drawerLayout;
     private Context mContext = this;
 
@@ -35,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        FragmentManager manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setCheckedItem(R.id.one_day_one_article);
         navigationView.setNavigationItemSelectedListener(new NavigationView
@@ -49,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(fragment);
                         break;
                     case R.id.nei_han_joke:
-                        Intent intent = new Intent(mContext, NeiHanActivity.class);
-                        startActivity(intent);
-                        drawerLayout.closeDrawers();
+//                        Intent intent = new Intent(mContext, NeiHanActivity.class);
+//                        startActivity(intent);
+//                        drawerLayout.closeDrawers();
+                        NeiHanFragment neiHanFragment = new NeiHanFragment();
+                        replaceFragment(neiHanFragment);
                         break;
                     default:
                 }
@@ -62,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment, fragment);
-        transaction.addToBackStack(null);
+//        transaction.addToBackStack(null);
         transaction.commit();
         drawerLayout.closeDrawers();
     }

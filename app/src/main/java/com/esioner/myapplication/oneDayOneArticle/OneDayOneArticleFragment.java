@@ -79,7 +79,7 @@ public class OneDayOneArticleFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mContext = inflater.getContext();
-        view = inflater.inflate(R.layout.one_day_one_articale_fragment_layout, null);
+        view = inflater.inflate(R.layout.one_day_one_articale_fragment_layout, container,false);
         helper = new MySQLiteOpenHelper(mContext);
         db = helper.getReadableDatabase();
         tvArticleAuthor = (TextView) view.findViewById(R.id.tv_one_article_author);
