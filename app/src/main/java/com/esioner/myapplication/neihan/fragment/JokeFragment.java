@@ -51,11 +51,14 @@ public class JokeFragment extends Fragment {
                     NeedBean needBean;
                     List<JokeData> jokeDatas = mJokeBean.getData().getJokeDatas();
                     for (JokeData jokeData : jokeDatas) {
-                        needBean = new NeedBean();
-                        needBean.setUserName(jokeData.getGroup().getUserInfo().getName());
-                        needBean.setUserHeadImg(jokeData.getGroup().getUserInfo().getHeadImage());
-                        needBean.setUserText(jokeData.getGroup().getContent());
-                        needBeanList.add(needBean);
+                        if (jokeData.getGroup() != null) {
+                            needBean = new NeedBean();
+                            needBean.setUserName(jokeData.getGroup().getUserInfo().getName());
+                            needBean.setUserHeadImg(jokeData.getGroup().getUserInfo().getHeadImage());
+                            needBean.setUserText(jokeData.getGroup().getContent());
+                            needBean.setUserTextPrefix(jokeData.getGroup().getPrefix());
+                            needBeanList.add(needBean);
+                        }
                     }
                     showText(needBeanList);
                     break;
@@ -87,7 +90,10 @@ public class JokeFragment extends Fragment {
 
     private void initJokeData() {
         String mimeTime = MyApplication.getUnixTime() + "";
-        String urlJoke = _URL.URL_RECOMMEND + _URL.getJokeJointUrlParameter(30 + "", mimeTime);
+//        String urlJoke = "http://is.snssdk.com/neihan/stream/mix/v1/?" + _URL.getJokeJointUrlParameter(30 + "", mimeTime);
+        //TODO  ：URL 拼接依旧有问题
+        String urlJoke = "http://is.snssdk.com/neihan/stream/mix/v1/?mpic=1&webp=1&essence=1&content_type=-102&message_cursor=-1&am_longitude=110&am_latitude=120&am_city=%E5%8C%97%E4%BA%AC%E5%B8%82&am_loc_time=1489226058493&count=30&min_time=1489205901&screen_width=1450&do00le_col_mode=0&iid=3216590132&device_id=32613520945&ac=wifi&channel=360&aid=7&app_name=joke_essay&version_code=612&version_name=6.1.2&device_platform=android&ssmix=a&device_type=sansung&device_brand=xiaomi&os_api=28&os_version=6.10.1&uuid=326135942187625&openudid=3dg6s95rhg2a3dg5&manifest_version_code=612&resolution=1450*2800&dpi=620&update_version_code=6120";
+        LogUtil.d("URL", urlJoke);
         OkHttpUtils.getInstance().asyncGet(urlJoke, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -99,9 +105,10 @@ public class JokeFragment extends Fragment {
                 String jokeBody = response.body().string();
                 LogUtil.d("JOKE_BODY", jokeBody);
                 Gson gson = new Gson();
-                JokeBean jokeBean = gson.fromJson(jokeBody, new TypeToken<JokeBean>() {}.getType());
+                JokeBean jokeBean = gson.fromJson(jokeBody, new TypeToken<JokeBean>() {
+                }.getType());
                 LogUtil.d("", jokeBean.getMessage());
-                LogUtil.d("",jokeBean.getData().getTip());
+                LogUtil.d("", jokeBean.getData().getTip());
 
                 Message msg = new Message();
                 msg.what = PARSE_JSON_SUCCESS;
@@ -113,15 +120,4 @@ public class JokeFragment extends Fragment {
 
 }
 
-
-//        tvJokeContent = (TextView) findViewById(R.id.tv_joke_content);
-//        SpannableStringBuilder styled = new SpannableStringBuilder(tvJokeContent.getText());
-//
-//// i 未起始字符索引，j 为结束字符索引
-//        styled.setSpan(new ForegroundColorSpan(Color.RED),"#", "#", Spannable
-// .SPAN_EXCLUSIVE_EXCLUSIVE);
-//
-//        tvJokeContent.setText(styled);
-////        tvJokeContent.setText(Html.fromHtml("<font
-// color=\"#ff0000\">"+"#内涵段子#"+"</font>"+"别人问我 32的胸为什么一定要穿36的胸罩 ……废话 房子大看着也硬气啊"));
 

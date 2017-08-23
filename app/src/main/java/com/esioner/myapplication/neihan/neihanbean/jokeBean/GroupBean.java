@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class GroupBean {
     @SerializedName("category_name")
     public String prefix;
+    @SerializedName("text")
     public String content;
     @SerializedName("user")
     public UserInfo userInfo;

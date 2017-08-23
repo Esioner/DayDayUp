@@ -2,12 +2,21 @@ package com.esioner.myapplication.neihan.neihanbean.jokeBean;
 
 
 public class NeedBean {
+    public String userTextPrefix;
     public String userName;
     public String userText;
     public String userHeadImg;
     public String commentName;
     public String commentHeadImg;
     public String commentText;
+
+    public String getUserTextPrefix() {
+        return userTextPrefix;
+    }
+
+    public void setUserTextPrefix(String userTextPrefix) {
+        this.userTextPrefix = userTextPrefix;
+    }
 
     public String getUserName() {
         return userName;

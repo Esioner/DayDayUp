@@ -63,6 +63,11 @@ public class NeiHanFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initView();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         //初始化 contentType
         initContentType();
     }
