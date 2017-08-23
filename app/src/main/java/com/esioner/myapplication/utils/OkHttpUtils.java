@@ -9,10 +9,15 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class OkHttpUtils {
+    private static OkHttpUtils okHttpUtils = new OkHttpUtils();
     private static OkHttpClient mClient;
 
-    public synchronized static OkHttpClient getInstance() {
-         if (mClient == null) {
+    public static OkHttpUtils getInstance() {
+        return okHttpUtils;
+    }
+
+    private synchronized static OkHttpClient getClient() {
+        if (mClient == null) {
             mClient = new OkHttpClient();
         }
         return mClient;
@@ -26,7 +31,7 @@ public class OkHttpUtils {
      * @throws IOException
      */
     public Response getResponse(String url) throws IOException {
-//        getInstance();
+        getClient();
         Response response;
         Request request = new Request.Builder()
                 .url(url)
@@ -35,8 +40,8 @@ public class OkHttpUtils {
         return response;
     }
 
-    public static void asyncGet(String url, Callback callback) {
-        getInstance();
+    public void asyncGet(String url, Callback callback) {
+        getClient();
         Request request = new Request.Builder()
                 .url(url)
                 .build();

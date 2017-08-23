@@ -17,15 +17,36 @@ import com.esioner.myapplication.neihan.fragment.JokeFragment;
 import com.esioner.myapplication.neihan.fragment.PictureFragment;
 import com.esioner.myapplication.neihan.fragment.RecommendFragment;
 import com.esioner.myapplication.neihan.fragment.VideoFragment;
+import com.esioner.myapplication.neihan.neihanbean.contentTypeBean.ContentTypeBean;
+import com.esioner.myapplication.neihan.neihanbean.contentTypeBean.TypeData;
+import com.esioner.myapplication.utils.LogUtil;
+import com.esioner.myapplication.utils.OkHttpUtils;
+import com.esioner.myapplication.utils.SPUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 
 public class NeiHanFragment extends Fragment {
     private TabLayout tabLayoutNeiHan;
     private ViewPager viewPagerNeiHan;
     private TextView tvJokeContent;
+    private List<TypeData> typeDataList;
+    private TypeData mRecommendTypeData;
+    private TypeData mVideoTypeData;
+    private TypeData mFriendShowTypeData;
+    private TypeData mPictureTypeData;
+    private TypeData mJokeTypeData;
+    //    private TypeData
 
     @Nullable
     @Override
@@ -34,7 +55,6 @@ public class NeiHanFragment extends Fragment {
         View view = inflater.inflate(R.layout.nei_han_main_pager_layout, container, false);
         tabLayoutNeiHan = (TabLayout) view.findViewById(R.id.tab_layout_nei_han);
         viewPagerNeiHan = (ViewPager) view.findViewById(R.id.viewpager_nei_han_content);
-        initView();
         return view;
     }
 
@@ -42,10 +62,80 @@ public class NeiHanFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+
+        //初始化 contentType
+        initContentType();
+    }
+
+    private void initContentType() {
+        String UrlContentType = _URL.URL_CONTENT_TYPE + _URL.getJointContentTypeParameter();
+        OkHttpUtils.getInstance().asyncGet(UrlContentType, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body().string();
+                LogUtil.w("RESPONSE_CONTENT_TYPE", responseBody);
+                Gson gson = new Gson();
+                Type type = new TypeToken<ContentTypeBean>() {}.getType();
+                ContentTypeBean contentTypeBean = gson.fromJson(responseBody, type);
+                if (contentTypeBean.getMessage().equals("success")) {
+                    List<TypeData> typeDataList = contentTypeBean.getTypeDatas();
+                    for (TypeData typeData : typeDataList) {
+                        switch (typeData.getName()) {
+                            case "推荐":
+                                mRecommendTypeData = typeData;
+                                SPUtils.putString("推荐",mRecommendTypeData.getUrl());
+                                LogUtil.i("推荐", "name=" + mRecommendTypeData.getName());
+                                LogUtil.i("推荐", "url=" + mRecommendTypeData.getUrl());
+                                LogUtil.i("推荐", "list_id=" + mRecommendTypeData.getListId());
+                                break;
+                            case "视频":
+                                mVideoTypeData = typeData;
+                                SPUtils.putString("视频",mVideoTypeData.getUrl());
+                                LogUtil.i("视频", "name=" + mVideoTypeData.getName());
+                                LogUtil.i("视频", "url=" + mVideoTypeData.getUrl());
+                                LogUtil.i("视频", "list_id=" + mVideoTypeData.getListId());
+                                break;
+                            case "段友秀":
+                                mFriendShowTypeData = typeData;
+                                LogUtil.i("段友秀", "name=" + mFriendShowTypeData.getName());
+                                LogUtil.i("段友秀", "url=" + mFriendShowTypeData.getUrl());
+                                LogUtil.i("段友秀", "list_id=" + mFriendShowTypeData.getListId());
+                                break;
+                            case "图片":
+                                mPictureTypeData = typeData;
+                                LogUtil.i("图片", "name=" + mPictureTypeData.getName());
+                                LogUtil.i("图片", "url=" + mPictureTypeData.getUrl());
+                                LogUtil.i("图片", "list_id=" + mPictureTypeData.getListId());
+                                break;
+                            case "段子":
+                                mJokeTypeData = typeData;
+                                SPUtils.putString("段子",mJokeTypeData.getUrl());
+                                LogUtil.i("段子", "name=" + mJokeTypeData.getName());
+                                LogUtil.i("段子", "url=" + mJokeTypeData.getUrl());
+                                LogUtil.i("段子", "list_id=" + mJokeTypeData.getListId());
+                                break;
+                            default:
+                        }
+                    }
+                }
+            }
+        });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
+
     }
 
     private void initView() {
-
         JokeFragment jokeFragment = new JokeFragment();
         FriendFragment friendFragment = new FriendFragment();
         PictureFragment pictureFragment = new PictureFragment();

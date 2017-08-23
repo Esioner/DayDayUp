@@ -178,7 +178,7 @@ public class OneDayOneArticleFragment extends Fragment implements View.OnClickLi
     public void getArticleFromInternet(String date) {
 //        final String url = "https://interface.meiriyiwen.com/article/today?dev=1";
         String url = "https://interface.meiriyiwen.com/article/day?dev=1&date=" + date;
-        OkHttpUtils.asyncGet(url, new Callback() {
+        OkHttpUtils.getInstance().asyncGet(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 mHandler.sendEmptyMessage(GET_ARTICLE_FAIL);
@@ -194,7 +194,6 @@ public class OneDayOneArticleFragment extends Fragment implements View.OnClickLi
                         final OneDayArticle article = gson.fromJson(jsonBody, OneDayArticle.class);
                         long stateCode = dbInsert(article);
                         Log.e("stateCode", "onResponse: " + stateCode);
-
                         Message msg = new Message();
                         msg.what = GET_ARTICLE_SUCCESSFUL;
                         mHandler.sendMessage(msg);

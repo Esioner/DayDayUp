@@ -1,7 +1,7 @@
 package com.esioner.myapplication;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,20 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-
-import com.esioner.myapplication.neihan.NeiHanActivity;
 import com.esioner.myapplication.neihan.NeiHanFragment;
 import com.esioner.myapplication.oneDayOneArticle.OneDayOneArticleFragment;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(fragment);
                         break;
                     case R.id.nei_han_joke:
-//                        Intent intent = new Intent(mContext, NeiHanActivity.class);
-//                        startActivity(intent);
-//                        drawerLayout.closeDrawers();
                         NeiHanFragment neiHanFragment = new NeiHanFragment();
                         replaceFragment(neiHanFragment);
                         break;

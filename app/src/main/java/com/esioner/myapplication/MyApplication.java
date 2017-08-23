@@ -7,7 +7,9 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.esioner.myapplication.utils.LogUtil;
 import com.esioner.myapplication.utils.SPUtils;
 
 import java.text.SimpleDateFormat;
@@ -24,13 +26,13 @@ public class MyApplication extends Application {
         super.onCreate();
         mContext = this;
 
-
         if (SPUtils.getString("iid").equals("")) {
             /**
              * 生成 iid
              */
             String iid = createNum(11);
             SPUtils.putString("iid", iid);
+            LogUtil.d("iid", iid);
         }
         if (SPUtils.getString("uuid").equals("")) {
             /**
@@ -38,6 +40,7 @@ public class MyApplication extends Application {
              */
             String uuid = createNum(15);
             SPUtils.putString("uuid", uuid);
+            LogUtil.d("uuid", uuid);
         }
         if (SPUtils.getString("openuuid").equals("")) {
             /**
@@ -45,9 +48,8 @@ public class MyApplication extends Application {
              */
             String openuuid = createRandomChar();
             SPUtils.putString("openuuid", openuuid);
+            LogUtil.d("openuuid", openuuid);
         }
-
-
     }
 
     /**
@@ -64,7 +66,7 @@ public class MyApplication extends Application {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String s = sdf.format(date).trim();
-        Log.e("Date", "replaceFragment: " + s);
+        LogUtil.d("DATE", s);
         return s;
     }
 
@@ -72,13 +74,16 @@ public class MyApplication extends Application {
      * 获取设备型号
      */
     public static String getDeviceModel() {
+        LogUtil.d("DEVICE_MODEL", Build.MODEL);
         return Build.MODEL;
+
     }
 
     /**
      * 获取手机制造商
      */
     public static String getManufacturer() {
+        LogUtil.d("Manufacturer", Build.MANUFACTURER);
         return Build.MANUFACTURER;
     }
 
@@ -86,7 +91,8 @@ public class MyApplication extends Application {
      * 获取当前 Unix 时间戳
      */
     public static long getUnixTime() {
-        return (System.currentTimeMillis() / 1000);
+        LogUtil.d("UnixTime", (System.currentTimeMillis()) + "");
+        return (System.currentTimeMillis());
     }
 
     /**
@@ -97,6 +103,9 @@ public class MyApplication extends Application {
         Point point = new Point();
         wm.getDefaultDisplay().getSize(point);
         int height = point.y;
+
+        LogUtil.d("WIDTH*HEIGHT", point.x * point.y + "");
+
         return point.x;
     }
 
@@ -114,6 +123,7 @@ public class MyApplication extends Application {
 
     //返回设备id
     public static String getDeviceId() {
+        LogUtil.d("getDeviceId", Build.SERIAL);
         return Build.SERIAL;
     }
 
@@ -121,10 +131,12 @@ public class MyApplication extends Application {
      * 返回版本号
      */
     public static String getVersionCode() {
+        LogUtil.d("getVersionCode", Build.VERSION.RELEASE);
         return Build.VERSION.RELEASE;
     }
 
     public static int getOSCode() {
+        LogUtil.d("getOSCode", Build.VERSION.SDK_INT + "");
         return Build.VERSION.SDK_INT;
     }
 
@@ -132,6 +144,7 @@ public class MyApplication extends Application {
         WindowManager wm = (WindowManager) mContext.getSystemService(WINDOW_SERVICE);
         DisplayMetrics metric = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(metric);
+        LogUtil.d("getScreenDPI", metric.densityDpi + "");
         return metric.densityDpi;
     }
 

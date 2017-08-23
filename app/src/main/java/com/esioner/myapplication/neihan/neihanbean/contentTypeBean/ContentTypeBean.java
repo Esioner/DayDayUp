@@ -1,5 +1,7 @@
 package com.esioner.myapplication.neihan.neihanbean.contentTypeBean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,6 +10,7 @@ import java.util.List;
 
 public class ContentTypeBean {
     public String message;
+    @SerializedName("data")
     public List<TypeData> typeDatas;
 
     public String getMessage() {
