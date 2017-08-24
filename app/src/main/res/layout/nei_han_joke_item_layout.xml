@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/apricotYellow"
     android:orientation="vertical"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="15dp"
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,18 +26,20 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_head_image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/link"
                 />
 
             <TextView
                 android:id="@+id/tv_joke_user_name"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="15dp"
                 android:gravity="center_vertical"
                 android:text="我的名字就很长"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 />
         </LinearLayout>
 
@@ -43,8 +48,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:text="今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩。。。"
             android:textSize="20sp"
             />
+        <!--感觉目前还是不需要-->
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp">-->
+
+        <!--<CheckBox-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_toLeftOf="@+id/nei_han_joke_share"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:background="@drawable/nei_han_like_selector"-->
+        <!--android:button="@null"/>-->
+
+        <!--<ImageButton-->
+        <!--android:id="@+id/nei_han_joke_share"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:background="@drawable/nei_han_share"/>-->
+        <!--</RelativeLayout>-->
     </LinearLayout>
+
 
 </android.support.v7.widget.CardView>

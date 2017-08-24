@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.esioner.myapplication.R;
 import com.esioner.myapplication.neihan.adapter.MyFragmentPageAdapter;
@@ -32,7 +33,6 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 
@@ -46,6 +46,7 @@ public class NeiHanFragment extends Fragment {
     private TypeData mFriendShowTypeData;
     private TypeData mPictureTypeData;
     private TypeData mJokeTypeData;
+    private Toolbar toolbar;
     //    private TypeData
 
     @Nullable
@@ -53,6 +54,7 @@ public class NeiHanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nei_han_main_pager_layout, container, false);
+
         tabLayoutNeiHan = (TabLayout) view.findViewById(R.id.tab_layout_nei_han);
         viewPagerNeiHan = (ViewPager) view.findViewById(R.id.viewpager_nei_han_content);
         return view;
@@ -93,14 +95,14 @@ public class NeiHanFragment extends Fragment {
                         switch (typeData.getName()) {
                             case "推荐":
                                 mRecommendTypeData = typeData;
-                                SPUtils.putString("推荐",mRecommendTypeData.getUrl());
+                                SPUtils.putString("推荐", mRecommendTypeData.getListId() + "");
                                 LogUtil.i("推荐", "name=" + mRecommendTypeData.getName());
                                 LogUtil.i("推荐", "url=" + mRecommendTypeData.getUrl());
                                 LogUtil.i("推荐", "list_id=" + mRecommendTypeData.getListId());
                                 break;
                             case "视频":
                                 mVideoTypeData = typeData;
-                                SPUtils.putString("视频",mVideoTypeData.getUrl());
+                                SPUtils.putString("视频", mVideoTypeData.getListId() + "");
                                 LogUtil.i("视频", "name=" + mVideoTypeData.getName());
                                 LogUtil.i("视频", "url=" + mVideoTypeData.getUrl());
                                 LogUtil.i("视频", "list_id=" + mVideoTypeData.getListId());
@@ -119,7 +121,7 @@ public class NeiHanFragment extends Fragment {
                                 break;
                             case "段子":
                                 mJokeTypeData = typeData;
-                                SPUtils.putString("段子",mJokeTypeData.getUrl());
+                                SPUtils.putString("段子", mJokeTypeData.getListId() + "");
                                 LogUtil.i("段子", "name=" + mJokeTypeData.getName());
                                 LogUtil.i("段子", "url=" + mJokeTypeData.getUrl());
                                 LogUtil.i("段子", "list_id=" + mJokeTypeData.getListId());

@@ -62,16 +62,50 @@ public class _URL {
      * @param minTime 上次请求的时间
      * @return
      */
+    //http://is.snssdk.com/neihan/stream/mix/v1/?
+    // mpic=1
+    // &webp=1
+    // &essence=1
+    // &content_type=-102
+    // &message_cursor=-1
+    // &am_longitude=110
+    // &am_latitude=120
+    // &am_city=%E5%8C%97%E4%BA%AC%E5%B8%82
+    // &am_loc_time=1489226058493
+    // &count=30
+    // &min_time=1489205901
+    // &screen_width=1450
+    // &double_col_mode=0
+    // &iid=3216590132
+    // &device_id=32613520945
+    // &ac=wifi
+    // &channel=360
+    // &aid=7
+    // &app_name=joke_essay
+    // &version_code=612
+    // &version_name=6.1.2
+    // &device_platform=android
+    // &ssmix=a
+    // &device_type=sansung
+    // &device_brand=xiaomi
+    // &os_api=28
+    // &os_version=6.10.1
+    // &uuid=326135942187625
+    // &openudid=3dg6s95rhg2a3dg5
+    // &manifest_version_code=612
+    // &resolution=1450*2800
+    // &dpi=620
+    // &update_version_code=6120
     public static String getJokeJointUrlParameter(String count, String
             minTime) {
         String suffixString = "mpic=1" +
-                "content_type=-102" +
+//                "content_type=-102" +
                 "webp=1" +          //固定值 1
                 "&essence=1" +      //固定值 1
                 "&message_cursor=-1" + //固定值-1
-                "&am_longitude=" +//经度。可为空
-                "&am_latitude=" +//纬度。可为空
-                "&am_city=" +//城市名，例如：北京市。可为空
+                "&am_longitude=110" +//经度。可为空
+                "&am_latitude=110" +//纬度。可为空
+                "&am_city=%E5%8C%97%E4%BA%AC%E5%B8%82" +//城市名，例如：北京市。可为空
                 "&am_loc_time=" + MyApplication.getUnixTime() +//当前时间 Unix 时间戳，毫秒为单位
                 "&count=" + count +//返回数量
                 "&min_time=" + minTime +//上次更新时间的 Unix 时间戳，秒为单位

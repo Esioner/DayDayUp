@@ -5,9 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.esioner.myapplication.utils.LogUtil;
 import com.esioner.myapplication.utils.SPUtils;
@@ -15,7 +13,6 @@ import com.esioner.myapplication.utils.SPUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-import java.util.jar.Manifest;
 
 
 public class MyApplication extends Application {
