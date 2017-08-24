@@ -1,6 +1,8 @@
-package com.esioner.myapplication.neihan.neihanbean.jokeBean;
+package com.esioner.myapplication.neihan.neihanbean.commonBean;
 
-public class JokeBean {
+import com.esioner.myapplication.neihan.neihanbean.commonBean.DataBean;
+
+public class NeiHanBean {
     public DataBean data;
     public String message;
 

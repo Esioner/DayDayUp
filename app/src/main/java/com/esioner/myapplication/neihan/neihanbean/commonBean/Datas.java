@@ -1,11 +1,12 @@
-package com.esioner.myapplication.neihan.neihanbean.jokeBean;
+package com.esioner.myapplication.neihan.neihanbean.commonBean;
 
 
+import com.esioner.myapplication.neihan.neihanbean.jokeBean.*;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class JokeData {
+public class Datas {
     @SerializedName("comments")
     List<CommentsBean> comments;
     @SerializedName("display_time")
@@ -13,7 +14,7 @@ public class JokeData {
     @SerializedName("online_time")
     public double onlineTime;
     public int type;
-    public GroupBean group;
+    public JokeGroupBean group;
 
 
     public List<CommentsBean> getComments() {
@@ -49,11 +50,11 @@ public class JokeData {
         this.type = type;
     }
 
-    public GroupBean getGroup() {
+    public JokeGroupBean getGroup() {
         return group;
     }
 
-    public void setGroup(GroupBean group) {
+    public void setGroup(JokeGroupBean group) {
         this.group = group;
     }
 }

@@ -16,8 +16,8 @@ import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
 import com.esioner.myapplication.neihan._URL;
 import com.esioner.myapplication.neihan.adapter.MyJokeRecyclerViewAdapter;
-import com.esioner.myapplication.neihan.neihanbean.jokeBean.JokeBean;
-import com.esioner.myapplication.neihan.neihanbean.jokeBean.JokeData;
+import com.esioner.myapplication.neihan.neihanbean.commonBean.NeiHanBean;
+import com.esioner.myapplication.neihan.neihanbean.commonBean.Datas;
 import com.esioner.myapplication.neihan.neihanbean.jokeBean.NeedBean;
 import com.esioner.myapplication.utils.LogUtil;
 import com.esioner.myapplication.utils.OkHttpUtils;
@@ -49,7 +49,7 @@ public class JokeFragment extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
 //                case PARSE_JSON_SUCCESS:
-//                    mJokeBean = (JokeBean) msg.obj;
+//                    mJokeBean = (NeiHanBean) msg.obj;
 //                    break;
                 default:
             }
@@ -139,37 +139,37 @@ public class JokeFragment extends Fragment {
                 String jokeBody = response.body().string();
                 LogUtil.d("JOKE_BODY", jokeBody);
                 Gson gson = new Gson();
-                JokeBean jokeBean = gson.fromJson(jokeBody, new TypeToken<JokeBean>() {
+                NeiHanBean neiHanBean = gson.fromJson(jokeBody, new TypeToken<NeiHanBean>() {
                 }.getType());
-                LogUtil.d("", jokeBean.getMessage());
-                LogUtil.d("", jokeBean.getData().getTip());
+                LogUtil.d("", neiHanBean.getMessage());
+                LogUtil.d("", neiHanBean.getData().getTip());
 
 
                 //遍历JokeBean
-                traverseData(jokeBean);
+                traverseData(neiHanBean);
 //                Message msg = new Message();
 //                msg.what = PARSE_JSON_SUCCESS;
-//                msg.obj = jokeBean;
+//                msg.obj = neiHanBean;
 //                mHandler.sendMessage(msg);
             }
         });
     }
 
     //遍历JokeData
-    private void traverseData(JokeBean mJokeBean) {
+    private void traverseData(NeiHanBean mNeiHanBean) {
         NeedBean needBean;
-        mineTime = mJokeBean.getData().getMin_time()-1000000;
+        mineTime = mNeiHanBean.getData().getMin_time()-1000000;
         LogUtil.i("MineTime", mineTime + "");
-        List<JokeData> jokeDatas = mJokeBean.getData().getJokeDatas();
+        List<Datas> datases = mNeiHanBean.getData().getDatas();
         List<NeedBean> lists = new ArrayList<>();
-        for (JokeData jokeData : jokeDatas) {
-            if (jokeData.getGroup() != null) {
+        for (Datas datas : datases) {
+            if (datas.getGroup() != null) {
                 needBean = new NeedBean();
-                needBean.setUserName(jokeData.getGroup().getUserInfo().getName());
-                needBean.setUserHeadImg(jokeData.getGroup().getUserInfo()
+                needBean.setUserName(datas.getGroup().getUserInfo().getName());
+                needBean.setUserHeadImg(datas.getGroup().getUserInfo()
                         .getHeadImage());
-                needBean.setUserText(jokeData.getGroup().getContent());
-                needBean.setUserTextPrefix(jokeData.getGroup().getPrefix());
+                needBean.setUserText(datas.getGroup().getContent());
+                needBean.setUserTextPrefix(datas.getGroup().getPrefix());
                 lists.add(needBean);
             }
         }

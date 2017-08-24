@@ -1,18 +1,20 @@
-package com.esioner.myapplication.neihan.neihanbean.jokeBean;
+package com.esioner.myapplication.neihan.neihanbean.commonBean;
 
+import com.esioner.myapplication.neihan.neihanbean.imgBean.ImageGroupBean;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class DataBean {
     @SerializedName("data")
-    public List<JokeData> jokeDatas;
+    public List<Datas> datas;
     public String has_more;
     public String has_new_message;
     public double max_time;
     public double min_time;
     public String tip;
-
+    //
+    public List<ImageGroupBean> imgData;
 
     public double getMax_time() {
         return max_time;
@@ -32,12 +34,12 @@ public class DataBean {
 
 
 
-    public List<JokeData> getJokeDatas() {
-        return jokeDatas;
+    public List<Datas> getDatas() {
+        return datas;
     }
 
-    public void setJokeDatas(List<JokeData> jokeDatas) {
-        this.jokeDatas = jokeDatas;
+    public void setDatas(List<Datas> datas) {
+        this.datas = datas;
     }
 
     public String getHas_more() {
