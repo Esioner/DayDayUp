@@ -20,6 +20,20 @@ public class NeedBean {
         return imageLargeUrl;
     }
 
+    /**
+     * 视频 URL
+     */
+    public String videoUrl;
+    public String videoCoverUrl;
+
+    public String getVideoCoverUrl() {
+        return videoCoverUrl;
+    }
+
+    public void setVideoCoverUrl(String videoCoverUrl) {
+        this.videoCoverUrl = videoCoverUrl;
+    }
+
     public void setImageLargeUrl(String imageLargeUrl) {
         this.imageLargeUrl = imageLargeUrl;
     }
@@ -30,6 +44,14 @@ public class NeedBean {
 
     public void setImageMiddleImage(String imageMiddleImage) {
         this.imageMiddleImage = imageMiddleImage;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     public int getMediaType() {

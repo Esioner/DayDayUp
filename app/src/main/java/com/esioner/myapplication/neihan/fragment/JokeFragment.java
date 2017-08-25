@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
 import com.esioner.myapplication.neihan._URL;
-import com.esioner.myapplication.neihan.adapter.MyJokeRecyclerViewAdapter;
+import com.esioner.myapplication.neihan.adapter.MyCommonRecyclerViewAdapter;
 import com.esioner.myapplication.neihan.neihanbean.commonBean.NeiHanBean;
 import com.esioner.myapplication.neihan.neihanbean.commonBean.Datas;
 import com.esioner.myapplication.neihan.neihanbean.commonBean.NeedBean;
@@ -41,7 +41,7 @@ public class JokeFragment extends Fragment {
     private List<NeedBean> needBeanList = new ArrayList<>();
     private RecyclerView recyclerViewJoke;
     private SmartRefreshLayout smartRefreshLayout;
-    private MyJokeRecyclerViewAdapter mAdapter;
+    private MyCommonRecyclerViewAdapter mAdapter;
     //    private final int PARSE_JSON_SUCCESS = 0;
     private double mineTime = MyApplication.getUnixTime()-1000000;
     private Handler mHandler = new Handler() {
@@ -187,7 +187,7 @@ public class JokeFragment extends Fragment {
 
     private void showText(List<NeedBean> list) {
         if (mAdapter == null) {
-            mAdapter = new MyJokeRecyclerViewAdapter(list);
+            mAdapter = new MyCommonRecyclerViewAdapter(list);
             recyclerViewJoke.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerViewJoke.setAdapter(mAdapter);
         } else {

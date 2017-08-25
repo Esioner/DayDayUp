@@ -1,6 +1,7 @@
 package com.esioner.myapplication.neihan.neihanbean.commonBean;
 
 
+import com.esioner.myapplication.neihan.neihanbean.OriginVideo;
 import com.esioner.myapplication.neihan.neihanbean.imgBean.LargeImage;
 import com.esioner.myapplication.neihan.neihanbean.imgBean.MiddleImage;
 import com.google.gson.annotations.SerializedName;
@@ -71,5 +72,35 @@ public class GroupBean {
         this.middleImage = middleImage;
     }
 
+    //视频字段
+    @SerializedName("origin_video")
+    public OriginVideo originVideo;
+    @SerializedName("large_cover")
+    public MediumCover mediumCover;
+    @SerializedName("mp4_url")
+    public String videoUrl;
 
+    public OriginVideo getOriginVideo() {
+        return originVideo;
+    }
+
+    public void setOriginVideo(OriginVideo originVideo) {
+        this.originVideo = originVideo;
+    }
+
+    public MediumCover getMediumCover() {
+        return mediumCover;
+    }
+
+    public void setMediumCover(MediumCover mediumCover) {
+        this.mediumCover = mediumCover;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
 }

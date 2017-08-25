@@ -20,9 +20,10 @@ import com.esioner.myapplication.neihan.neihanbean.commonBean.NeedBean;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 
-public class MyJokeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<NeedBean> needBeanList;
 
@@ -56,19 +57,37 @@ public class MyJokeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         private final TextView tvPictureUserName;
         private final TextView tvPictureUserContent;
         private final ImageView ivPictureUserImage;
-        private final CircleImageView ivUserHeadImage;
+        private final CircleImageView ivPictureUserHeadImage;
 
         public PictureViewHolder(View itemView) {
             super(itemView);
             tvPictureUserName = (TextView) itemView.findViewById(R.id.tv_picture_user_name);
             tvPictureUserContent = (TextView) itemView.findViewById(R.id.tv_picture_content);
             ivPictureUserImage = (ImageView) itemView.findViewById(R.id.iv_picture_image);
-            ivUserHeadImage = (CircleImageView) itemView.findViewById(R.id
+            ivPictureUserHeadImage = (CircleImageView) itemView.findViewById(R.id
                     .iv_picture_user_head_image);
         }
     }
 
-    public MyJokeRecyclerViewAdapter(List<NeedBean> list) {
+    public class VideoViewHolder extends RecyclerView.ViewHolder {
+
+        private final JCVideoPlayerStandard jcVideoPlayer;
+        private final CircleImageView ivUserHeadImage;
+        private final TextView tvVideoUserContent;
+        private final TextView tvVideoUserName;
+
+        public VideoViewHolder(View itemView) {
+            super(itemView);
+            tvVideoUserName = (TextView) itemView.findViewById(R.id.tv_picture_user_name);
+            tvVideoUserContent = (TextView) itemView.findViewById(R.id.tv_picture_content);
+            ivUserHeadImage = (CircleImageView) itemView.findViewById(R.id
+                    .iv_picture_user_head_image);
+            jcVideoPlayer = (JCVideoPlayerStandard) itemView.findViewById(R.id
+                    .nei_han_video_player);
+        }
+    }
+
+    public MyCommonRecyclerViewAdapter(List<NeedBean> list) {
         needBeanList = list;
         mediaType = needBeanList.get(0).getMediaType();
     }
@@ -88,20 +107,21 @@ public class MyJokeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                         .nei_han_picture_item_layout, parent, false);
                 holder = new PictureViewHolder(view);
                 break;
+            case VIDEO_TYPE:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout
+                        .nei_han_video_item, parent, false);
+                holder = new PictureViewHolder(view);
         }
         return holder;
-
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final NeedBean needBean = needBeanList.get(position);
-
         String text = "#" + needBean.getUserTextPrefix() + "#" + needBean.getUserText();
         SpannableStringBuilder styled = new SpannableStringBuilder(text);
         styled.setSpan(new ForegroundColorSpan(Color.RED), text.indexOf("#"), text.indexOf("#",
                 2) + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         if (holder instanceof JokeViewHolder) {
             ((JokeViewHolder) holder).tvJokeUserName.setText(needBean.getUserName());
             ((JokeViewHolder) holder).tvJokeContent.setText(styled);
@@ -111,7 +131,7 @@ public class MyJokeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             ((PictureViewHolder) holder).tvPictureUserName.setText(needBean.getUserName());
             ((PictureViewHolder) holder).tvPictureUserContent.setText(styled);
             Glide.with(MyApplication.getContext()).load(needBean.getUserHeadImg()).into((
-                    (PictureViewHolder) holder).ivUserHeadImage);
+                    (PictureViewHolder) holder).ivPictureUserHeadImage);
             Glide.with(MyApplication.getContext()).load(needBean.getImageMiddleImage()).into((
                     (PictureViewHolder) holder).ivPictureUserImage);
             ((PictureViewHolder) holder).ivPictureUserImage.setOnClickListener(new View
@@ -120,11 +140,20 @@ public class MyJokeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 public void onClick(View v) {
                     Intent intent = new Intent(MyApplication.getContext(), ShowImageView.class);
                     intent.putExtra("IMAGE_URL", needBean.getImageLargeUrl());
-                    intent.putExtra("IMAGE_TITLE",needBean.getUserText());
+                    intent.putExtra("IMAGE_TITLE", needBean.getUserText());
                     MyApplication.getContext().startActivity(intent);
 
                 }
             });
+        } else if (holder instanceof VideoViewHolder) {
+            ((VideoViewHolder) holder).tvVideoUserName.setText(needBean.getUserName());
+            ((VideoViewHolder) holder).tvVideoUserContent.setText(styled);
+            Glide.with(MyApplication.getContext()).load(needBean.getUserHeadImg()).into((
+                    (VideoViewHolder) holder).ivUserHeadImage);
+            ((VideoViewHolder) holder).jcVideoPlayer.setUp(needBean.getVideoUrl(),
+                    JCVideoPlayerStandard.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN, needBean.getUserText());
+            Glide.with(MyApplication.getContext()).load(needBean.getVideoCoverUrl()).into((
+                    (VideoViewHolder) holder).jcVideoPlayer.thumbImageView);
         }
     }
 
@@ -143,9 +172,9 @@ public class MyJokeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             case 1:
                 viewType = PICTURE_TYPE;
                 break;
-//            case 3:
-//                viewType = VIDEO_TYPE;
-//                break;
+            case 3:
+                viewType = VIDEO_TYPE;
+                break;
         }
         return viewType;
     }

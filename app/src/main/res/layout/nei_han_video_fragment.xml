@@ -5,7 +5,7 @@
               android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/nei_han_video"
+        android:id="@+id/recycler_view_nei_han_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
