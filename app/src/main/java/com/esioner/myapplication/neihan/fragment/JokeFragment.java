@@ -18,7 +18,7 @@ import com.esioner.myapplication.neihan._URL;
 import com.esioner.myapplication.neihan.adapter.MyJokeRecyclerViewAdapter;
 import com.esioner.myapplication.neihan.neihanbean.commonBean.NeiHanBean;
 import com.esioner.myapplication.neihan.neihanbean.commonBean.Datas;
-import com.esioner.myapplication.neihan.neihanbean.jokeBean.NeedBean;
+import com.esioner.myapplication.neihan.neihanbean.commonBean.NeedBean;
 import com.esioner.myapplication.utils.LogUtil;
 import com.esioner.myapplication.utils.OkHttpUtils;
 import com.google.gson.Gson;
@@ -170,6 +170,7 @@ public class JokeFragment extends Fragment {
                         .getHeadImage());
                 needBean.setUserText(datas.getGroup().getContent());
                 needBean.setUserTextPrefix(datas.getGroup().getPrefix());
+                needBean.setMediaType(datas.getGroup().getMediaType());
                 lists.add(needBean);
             }
         }
@@ -185,7 +186,6 @@ public class JokeFragment extends Fragment {
     }
 
     private void showText(List<NeedBean> list) {
-
         if (mAdapter == null) {
             mAdapter = new MyJokeRecyclerViewAdapter(list);
             recyclerViewJoke.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -1,6 +1,6 @@
 package com.esioner.myapplication.neihan.neihanbean.commonBean;
 
-import com.esioner.myapplication.neihan.neihanbean.imgBean.ImageGroupBean;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class DataBean {
     public double min_time;
     public String tip;
     //
-    public List<ImageGroupBean> imgData;
+    public List<GroupBean> imgData;
 
     public double getMax_time() {
         return max_time;
@@ -31,8 +31,6 @@ public class DataBean {
     public void setMin_time(double min_time) {
         this.min_time = min_time;
     }
-
-
 
     public List<Datas> getDatas() {
         return datas;
@@ -57,10 +55,6 @@ public class DataBean {
     public void setHas_new_message(String has_new_message) {
         this.has_new_message = has_new_message;
     }
-
-
-
-
     public String getTip() {
         return tip;
     }

@@ -1,6 +1,8 @@
 package com.esioner.myapplication.neihan.neihanbean.commonBean;
 
 
+import com.esioner.myapplication.neihan.neihanbean.imgBean.LargeImage;
+import com.esioner.myapplication.neihan.neihanbean.imgBean.MiddleImage;
 import com.google.gson.annotations.SerializedName;
 
 public class GroupBean {
@@ -42,6 +44,32 @@ public class GroupBean {
     }
 
     public void setUserInfo(UserInfo userInfo) {
+
         this.userInfo = userInfo;
     }
+
+
+    //图片字段
+    @SerializedName("large_image")
+    public LargeImage largeImage;
+    @SerializedName("middle_image")
+    public MiddleImage middleImage;
+
+    public LargeImage getLargeImage() {
+        return largeImage;
+    }
+
+    public void setLargeImage(LargeImage largeImage) {
+        this.largeImage = largeImage;
+    }
+
+    public MiddleImage getMiddleImage() {
+        return middleImage;
+    }
+
+    public void setMiddleImage(MiddleImage middleImage) {
+        this.middleImage = middleImage;
+    }
+
+
 }

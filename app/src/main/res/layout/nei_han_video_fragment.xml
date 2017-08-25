@@ -4,11 +4,11 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/nei_han_video"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="这是视频Fragment"
-        android:gravity="center"
-        android:textSize="50dp"/>
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

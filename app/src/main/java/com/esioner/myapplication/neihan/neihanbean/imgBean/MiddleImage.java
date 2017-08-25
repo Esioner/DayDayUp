@@ -1,5 +1,7 @@
 package com.esioner.myapplication.neihan.neihanbean.imgBean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class MiddleImage {
@@ -19,13 +21,6 @@ public class MiddleImage {
         this.width = width;
     }
 
-    public List<UrlList> getUrlLists() {
-        return urlLists;
-    }
-
-    public void setUrlLists(List<UrlList> urlLists) {
-        this.urlLists = urlLists;
-    }
 
     public int getHeight() {
         return height;
@@ -59,6 +54,14 @@ public class MiddleImage {
         this.uri = uri;
     }
 
-    public List<UrlList> urlLists;
+    @SerializedName("url_list")
+    public List<ImageUrl> urlLists;
 
+    public List<ImageUrl> getUrlLists() {
+        return urlLists;
+    }
+
+    public void setUrlLists(List<ImageUrl> urlLists) {
+        this.urlLists = urlLists;
+    }
 }

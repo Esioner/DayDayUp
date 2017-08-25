@@ -1,4 +1,4 @@
-package com.esioner.myapplication.neihan.neihanbean.jokeBean;
+package com.esioner.myapplication.neihan.neihanbean.commonBean;
 
 
 public class NeedBean {
@@ -9,6 +9,36 @@ public class NeedBean {
     public String commentName;
     public String commentHeadImg;
     public String commentText;
+    public int mediaType;
+    /**
+     * 图片 URL
+     */
+    public String imageLargeUrl;
+    public String imageMiddleImage;
+
+    public String getImageLargeUrl() {
+        return imageLargeUrl;
+    }
+
+    public void setImageLargeUrl(String imageLargeUrl) {
+        this.imageLargeUrl = imageLargeUrl;
+    }
+
+    public String getImageMiddleImage() {
+        return imageMiddleImage;
+    }
+
+    public void setImageMiddleImage(String imageMiddleImage) {
+        this.imageMiddleImage = imageMiddleImage;
+    }
+
+    public int getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(int mediaType) {
+        this.mediaType = mediaType;
+    }
 
     public String getUserTextPrefix() {
         return userTextPrefix;

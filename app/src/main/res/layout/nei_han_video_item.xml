@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_picture_user_head_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/link"
+                />
+
+            <TextView
+                android:id="@+id/tv_picture_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:gravity="center_vertical"
+                android:text="我的名字就很长"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_picture_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩。。。"
+            android:textSize="20sp"
+            />
+
+        <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+            android:id="@+id/nei_han_video_player"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"/>
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
