@@ -1,12 +1,16 @@
 package com.esioner.myapplication.neihan.adapter;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -44,20 +48,42 @@ public class ShowImageView extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 0:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager
+                        .PERMISSION_GRANTED) {
+                    Toast.makeText(this, "获取权限成功，请重新下载", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "权限获取失败，请重新授权", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_return_show_image:
                 finish();
                 break;
             case R.id.btn_save_show_image:
-                download(url, title = title.length() > 10 ? SystemClock.currentThreadTimeMillis()
-                        + "" : title);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission
+                        .WRITE_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission
+                            .WRITE_EXTERNAL_STORAGE}, 0);
+                } else {
+                    download(url, title = title.length() > 10 ? SystemClock
+                            .currentThreadTimeMillis()
+                            + "" : title);
+                }
                 break;
         }
     }
 
     public void download(final String url, final String imageName) {
-
         File file = null;
         file = new File(Environment.getExternalStoragePublicDirectory(Environment
                 .DIRECTORY_PICTURES).getAbsolutePath(), imageName + ".png");
@@ -77,6 +103,7 @@ public class ShowImageView extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(ShowImageView.this, "正在下载，请稍后", Toast.LENGTH_SHORT)
                         .show();
             }
+
             @Override
             public void onError(ErrorCause errorCause) {
                 Snackbar.make(null, "下载失败，请重新下载", 3000)
@@ -87,6 +114,7 @@ public class ShowImageView extends AppCompatActivity implements View.OnClickList
                             }
                         }).show();
             }
+
             @Override
             public void onCanceled(CancelCause cancelCause) {
             }
