@@ -15,6 +15,26 @@ public class GroupBean {
     public UserInfo userInfo;
     @SerializedName("media_type")
     public int mediaType;
+    @SerializedName("bury_count")
+    public int dislikeCount;
+    @SerializedName("digg_count")
+    public int likeCount;
+
+    public int getDislikeCount() {
+        return dislikeCount;
+    }
+
+    public void setDislikeCount(int dislikeCount) {
+        this.dislikeCount = dislikeCount;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public int getMediaType() {
         return mediaType;
@@ -75,7 +95,7 @@ public class GroupBean {
     //视频字段
     @SerializedName("origin_video")
     public OriginVideo originVideo;
-    @SerializedName("large_cover")
+    @SerializedName("medium_cover")
     public MediumCover mediumCover;
     @SerializedName("mp4_url")
     public String videoUrl;

@@ -10,6 +10,25 @@ public class NeedBean {
     public String commentHeadImg;
     public String commentText;
     public int mediaType;
+    public int likeCount;
+    public int dislikeCount;
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getDislikeCount() {
+        return dislikeCount;
+    }
+
+    public void setDislikeCount(int dislikeCount) {
+        this.dislikeCount = dislikeCount;
+    }
+
     /**
      * 图片 URL
      */

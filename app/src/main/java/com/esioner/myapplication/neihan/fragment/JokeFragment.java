@@ -94,13 +94,13 @@ public class JokeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        loadJokeData();
+        loadJokeData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        loadJokeData();
+//        loadJokeData();
     }
 
     public void refresh() {
@@ -171,6 +171,8 @@ public class JokeFragment extends Fragment {
                 needBean.setUserText(datas.getGroup().getContent());
                 needBean.setUserTextPrefix(datas.getGroup().getPrefix());
                 needBean.setMediaType(datas.getGroup().getMediaType());
+                needBean.setLikeCount(datas.getGroup().getLikeCount());
+                needBean.setDislikeCount(datas.getGroup().getDislikeCount());
                 lists.add(needBean);
             }
         }

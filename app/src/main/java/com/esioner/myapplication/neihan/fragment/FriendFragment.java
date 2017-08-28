@@ -9,12 +9,6 @@ import android.view.ViewGroup;
 
 import com.esioner.myapplication.R;
 
-/**
- * Create: 2017/8/22
- * Writer: liurui
- * Phone:  13554142421
- * Email:  16801630@qq.com
- */
 
 public class FriendFragment extends Fragment {
     @Nullable

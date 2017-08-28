@@ -80,6 +80,12 @@ public class PictureFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         loadJokeData();
     }
 

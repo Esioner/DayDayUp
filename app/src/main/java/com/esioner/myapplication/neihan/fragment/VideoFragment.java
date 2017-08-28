@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
@@ -21,6 +22,9 @@ import com.esioner.myapplication.utils.OkHttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,12 +34,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-/**
- * Create: 2017/8/22
- * Writer: liurui
- * Phone:  13554142421
- * Email:  16801630@qq.com
- */
 
 public class VideoFragment extends Fragment {
 
@@ -45,32 +43,64 @@ public class VideoFragment extends Fragment {
     private MyCommonRecyclerViewAdapter mAdapter;
     private double mineTime = MyApplication.getUnixTime() - 1000000;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.nei_han_video_fragment, container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.nei_han_video_fragment, container, false);
         recyclerViewVideo = (RecyclerView) view.findViewById(R.id.recycler_view_nei_han_video);
+
+        smartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id
+                .smart_refresh_layout_video);
+
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refresh();
+                Toast.makeText(getActivity().getApplicationContext(), "正在刷新", Toast.LENGTH_SHORT)
+                        .show();
+                if (smartRefreshLayout.isRefreshing()) {
+                    smartRefreshLayout.finishRefresh();
+                }
+            }
+        });
+
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                loadMore();
+                Toast.makeText(getActivity().getApplicationContext(), "正在加载更多", Toast
+                        .LENGTH_SHORT).show();
+                if (smartRefreshLayout.isLoading()) {
+                    smartRefreshLayout.finishLoadmore();
+                }
+            }
+        });
+
         return view;
     }
 
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        loadVideoData();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        loadJokeData();
     }
 
     public void refresh() {
         needBeanList.clear();
-        loadJokeData();
+        loadVideoData();
     }
 
     public void loadMore() {
-        loadJokeData();
+        loadVideoData();
     }
 
-    private void loadJokeData() {
+    private void loadVideoData() {
         String urlJoke = "http://is.snssdk.com/neihan/stream/mix/v1/?content_type=-104&" + _URL
                 .getVideoJointUrlParameter(30 + "", mineTime + "");
         LogUtil.d("Video_URL", urlJoke);
@@ -87,8 +117,8 @@ public class VideoFragment extends Fragment {
                 Gson gson = new Gson();
                 NeiHanBean neiHanBean = gson.fromJson(jokeBody, new TypeToken<NeiHanBean>() {
                 }.getType());
-                LogUtil.d("", neiHanBean.getMessage());
-                LogUtil.d("", neiHanBean.getData().getTip());
+                LogUtil.d("视频Json", neiHanBean.getMessage());
+                LogUtil.d("视频Tip", neiHanBean.getData().getTip());
 
                 //遍历JokeBean
                 traverseData(neiHanBean);
@@ -115,8 +145,8 @@ public class VideoFragment extends Fragment {
                 needBean.setMediaType(datas.getGroup().getMediaType());
 
                 needBean.setVideoUrl(datas.getGroup().getVideoUrl());
-//                needBean.setVideoCoverUrl(datas.getGroup().getMediumCover().getUrlLists().get(0)
-//                        .getUrl());
+                needBean.setVideoCoverUrl(datas.getGroup().getMediumCover().getUrlLists().get(0)
+                        .getUrl());
                 lists.add(needBean);
             }
         }

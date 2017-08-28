@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,8 +47,9 @@
         <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
             android:id="@+id/nei_han_video_player"
             android:layout_width="match_parent"
-            android:layout_height="500dp"/>
+            android:layout_height="300dp"/>
 
+        <include layout="@layout/nei_han_item_bar"/>
     </LinearLayout>
 
 

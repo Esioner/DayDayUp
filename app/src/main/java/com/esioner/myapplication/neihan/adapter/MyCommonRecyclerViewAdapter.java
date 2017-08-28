@@ -42,10 +42,14 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         private final TextView tvJokeContent;
         private final CircleImageView ivUserHeadImage;
         private final View view;
+        private final TextView tvJokeLikeCount;
+        private final TextView tvJokeDislikeCount;
 
         public JokeViewHolder(View itemView) {
             super(itemView);
             view = itemView.findViewById(R.id.card_view);
+            tvJokeLikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_like);
+            tvJokeDislikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_dislike);
             tvJokeUserName = (TextView) itemView.findViewById(R.id.tv_joke_user_name);
             tvJokeContent = (TextView) itemView.findViewById(R.id.tv_joke_content);
             ivUserHeadImage = (CircleImageView) itemView.findViewById(R.id.user_head_image);
@@ -58,6 +62,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         private final TextView tvPictureUserContent;
         private final ImageView ivPictureUserImage;
         private final CircleImageView ivPictureUserHeadImage;
+        private final TextView tvPictureLikeCount;
+        private final TextView tvPictureDislikeCount;
 
         public PictureViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +72,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             ivPictureUserImage = (ImageView) itemView.findViewById(R.id.iv_picture_image);
             ivPictureUserHeadImage = (CircleImageView) itemView.findViewById(R.id
                     .iv_picture_user_head_image);
+            tvPictureLikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_like);
+            tvPictureDislikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_dislike);
         }
     }
 
@@ -75,15 +83,19 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         private final CircleImageView ivUserHeadImage;
         private final TextView tvVideoUserContent;
         private final TextView tvVideoUserName;
+        private final TextView tvVideoLikeCount;
+        private final TextView tvVideoDisikeCount;
 
         public VideoViewHolder(View itemView) {
             super(itemView);
-            tvVideoUserName = (TextView) itemView.findViewById(R.id.tv_picture_user_name);
-            tvVideoUserContent = (TextView) itemView.findViewById(R.id.tv_picture_content);
+            tvVideoUserName = (TextView) itemView.findViewById(R.id.tv_video_user_name);
+            tvVideoUserContent = (TextView) itemView.findViewById(R.id.tv_video_content);
             ivUserHeadImage = (CircleImageView) itemView.findViewById(R.id
-                    .iv_picture_user_head_image);
+                    .iv_video_user_head_image);
             jcVideoPlayer = (JCVideoPlayerStandard) itemView.findViewById(R.id
                     .nei_han_video_player);
+            tvVideoLikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_like);
+            tvVideoDisikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_dislike);
         }
     }
 
@@ -110,7 +122,9 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             case VIDEO_TYPE:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout
                         .nei_han_video_item, parent, false);
-                holder = new PictureViewHolder(view);
+                holder = new VideoViewHolder(view);
+                break;
+            default:
         }
         return holder;
     }
@@ -127,6 +141,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             ((JokeViewHolder) holder).tvJokeContent.setText(styled);
             Glide.with(MyApplication.getContext()).load(needBean.getUserHeadImg()).into((
                     (JokeViewHolder) holder).ivUserHeadImage);
+            ((JokeViewHolder) holder).tvJokeLikeCount.setText(needBean.getLikeCount()+"");
+            ((JokeViewHolder) holder).tvJokeDislikeCount.setText(needBean.getDislikeCount()+"");
         } else if (holder instanceof PictureViewHolder) {
             ((PictureViewHolder) holder).tvPictureUserName.setText(needBean.getUserName());
             ((PictureViewHolder) holder).tvPictureUserContent.setText(styled);
@@ -134,6 +150,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                     (PictureViewHolder) holder).ivPictureUserHeadImage);
             Glide.with(MyApplication.getContext()).load(needBean.getImageMiddleImage()).into((
                     (PictureViewHolder) holder).ivPictureUserImage);
+            ((PictureViewHolder) holder).tvPictureLikeCount.setText(needBean.getLikeCount()+"");
+            ((PictureViewHolder) holder).tvPictureDislikeCount.setText(needBean.getDislikeCount()+"");
             ((PictureViewHolder) holder).ivPictureUserImage.setOnClickListener(new View
                     .OnClickListener() {
                 @Override
@@ -151,10 +169,16 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             Glide.with(MyApplication.getContext()).load(needBean.getUserHeadImg()).into((
                     (VideoViewHolder) holder).ivUserHeadImage);
             ((VideoViewHolder) holder).jcVideoPlayer.setUp(needBean.getVideoUrl(),
-                    JCVideoPlayerStandard.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN, needBean.getUserText());
+                    JCVideoPlayerStandard.SYSTEM_UI_FLAG_HIDE_NAVIGATION, needBean
+                            .getUserText());
             Glide.with(MyApplication.getContext()).load(needBean.getVideoCoverUrl()).into((
                     (VideoViewHolder) holder).jcVideoPlayer.thumbImageView);
+            ((VideoViewHolder) holder).tvVideoLikeCount.setText(needBean.getLikeCount()+"");
+            ((VideoViewHolder) holder).tvVideoLikeCount.setText(needBean.getDislikeCount()+"");
         }
+
+
+
     }
 
     @Override
