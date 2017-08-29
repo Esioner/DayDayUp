@@ -35,6 +35,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+//import com.esioner.myapplication.neihan.fragment.PictureFragment;
+//import com.esioner.myapplication.neihan.fragment.VideoFragment;
+
 
 public class NeiHanFragment extends Fragment {
     private TabLayout tabLayoutNeiHan;

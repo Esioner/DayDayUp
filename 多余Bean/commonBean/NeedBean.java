@@ -9,7 +9,7 @@ public class NeedBean {
     public String commentName;
     public String commentHeadImg;
     public String commentText;
-    public int mediaType;
+//    public int mediaType;
     public int likeCount;
     public int dislikeCount;
 
@@ -72,14 +72,14 @@ public class NeedBean {
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }
-
-    public int getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(int mediaType) {
-        this.mediaType = mediaType;
-    }
+//
+//    public int getMediaType() {
+//        return mediaType;
+//    }
+//
+//    public void setMediaType(int mediaType) {
+//        this.mediaType = mediaType;
+//    }
 
     public String getUserTextPrefix() {
         return userTextPrefix;

@@ -15,8 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.esioner.myapplication.R;
+import com.esioner.myapplication.utils.GlideUtils;
 
 import java.io.File;
 
@@ -41,8 +41,9 @@ public class ShowImageView extends AppCompatActivity implements View.OnClickList
         iv.setZoomEnabled(true);
         url = getIntent().getStringExtra("IMAGE_URL");
         title = getIntent().getStringExtra("IMAGE_TITLE");
-        Glide.with(this).load(url).into(iv);
+//        Glide.with(this).load(url).into(iv);
 
+        GlideUtils.showImage(url,iv);
         findViewById(R.id.btn_return_show_image).setOnClickListener(this);
         findViewById(R.id.btn_save_show_image).setOnClickListener(this);
     }

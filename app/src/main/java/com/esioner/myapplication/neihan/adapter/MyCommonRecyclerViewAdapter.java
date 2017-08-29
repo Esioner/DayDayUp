@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
-import com.esioner.myapplication.neihan.neihanbean.commonBean.NeedBean;
+import com.esioner.myapplication.neihan.neihanbean.NeiHanBean.NeiHanDataBean;
+import com.esioner.myapplication.utils.GlideUtils;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<NeedBean> needBeanList;
+    private List<NeiHanDataBean> dataBeanList;
 
     /**
      * 段子 0
@@ -99,9 +101,9 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    public MyCommonRecyclerViewAdapter(List<NeedBean> list) {
-        needBeanList = list;
-        mediaType = needBeanList.get(0).getMediaType();
+    public MyCommonRecyclerViewAdapter(List<NeiHanDataBean> list) {
+        dataBeanList = list;
+        mediaType = dataBeanList.get(0).getGroup().getMediaType();
     }
 
     @Override
@@ -124,6 +126,9 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                         .nei_han_video_item, parent, false);
                 holder = new VideoViewHolder(view);
                 break;
+            case -1:
+                Toast.makeText(MyApplication.getContext(), "错误", Toast.LENGTH_SHORT).show();
+                break;
             default:
         }
         return holder;
@@ -131,59 +136,71 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final NeedBean needBean = needBeanList.get(position);
-        String text = "#" + needBean.getUserTextPrefix() + "#" + needBean.getUserText();
+        final NeiHanDataBean dataBean = dataBeanList.get(position);
+        String text = "#" + dataBean.getGroup().getCategoryName() + "#" + dataBean.getGroup()
+                .getText();
         SpannableStringBuilder styled = new SpannableStringBuilder(text);
         styled.setSpan(new ForegroundColorSpan(Color.RED), text.indexOf("#"), text.indexOf("#",
                 2) + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        String userName = dataBean.getGroup().getUserInfo().getName();
+        String userHeaderUrl = dataBean.getGroup().getUserInfo().getAvatarUrl();
+        int diggCount = dataBean.getGroup().getDiggCount();
+
         if (holder instanceof JokeViewHolder) {
-            ((JokeViewHolder) holder).tvJokeUserName.setText(needBean.getUserName());
+            ((JokeViewHolder) holder).tvJokeUserName.setText(userName);
             ((JokeViewHolder) holder).tvJokeContent.setText(styled);
-            Glide.with(MyApplication.getContext()).load(needBean.getUserHeadImg()).into((
-                    (JokeViewHolder) holder).ivUserHeadImage);
-            ((JokeViewHolder) holder).tvJokeLikeCount.setText(needBean.getLikeCount()+"");
-            ((JokeViewHolder) holder).tvJokeDislikeCount.setText(needBean.getDislikeCount()+"");
+            GlideUtils.showImage(userHeaderUrl, ((JokeViewHolder) holder).ivUserHeadImage);
+//            ((JokeViewHolder) holder).tvJokeLikeCount.setText(String.valueOf(diggCount));
+//            ((JokeViewHolder) holder).tvJokeDislikeCount.setText(String.valueOf(needBean
+//                    .getDislikeCount()));
         } else if (holder instanceof PictureViewHolder) {
-            ((PictureViewHolder) holder).tvPictureUserName.setText(needBean.getUserName());
+            ((PictureViewHolder) holder).tvPictureUserName.setText(userName);
             ((PictureViewHolder) holder).tvPictureUserContent.setText(styled);
-            Glide.with(MyApplication.getContext()).load(needBean.getUserHeadImg()).into((
-                    (PictureViewHolder) holder).ivPictureUserHeadImage);
-            Glide.with(MyApplication.getContext()).load(needBean.getImageMiddleImage()).into((
-                    (PictureViewHolder) holder).ivPictureUserImage);
-            ((PictureViewHolder) holder).tvPictureLikeCount.setText(needBean.getLikeCount()+"");
-            ((PictureViewHolder) holder).tvPictureDislikeCount.setText(needBean.getDislikeCount()+"");
+            //加载头像
+            GlideUtils.showImage(userHeaderUrl, ((PictureViewHolder) holder)
+                    .ivPictureUserHeadImage);
+            //加载图片
+            GlideUtils.showImage(dataBean.getGroup().getLargeImage().getUrlLists().get(0).getUrl
+                    (), ((PictureViewHolder) holder)
+                    .ivPictureUserImage);
+//            //设置点赞数
+//            ((PictureViewHolder) holder).tvPictureLikeCount.setText(String.valueOf(needBean
+//                    .getLikeCount()));
+//            //设置点踩数
+//            ((PictureViewHolder) holder).tvPictureDislikeCount.setText(String.valueOf(needBean
+//                    .getDislikeCount()));
+            //设置图片点击事件
             ((PictureViewHolder) holder).ivPictureUserImage.setOnClickListener(new View
                     .OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MyApplication.getContext(), ShowImageView.class);
-                    intent.putExtra("IMAGE_URL", needBean.getImageLargeUrl());
-                    intent.putExtra("IMAGE_TITLE", needBean.getUserText());
+                    intent.putExtra("IMAGE_URL", dataBean.getGroup().getLargeImage().getUrlLists
+                            ().get(0).getUrl());
+                    intent.putExtra("IMAGE_TITLE", dataBean.getGroup().getText());
                     MyApplication.getContext().startActivity(intent);
-
                 }
             });
         } else if (holder instanceof VideoViewHolder) {
-            ((VideoViewHolder) holder).tvVideoUserName.setText(needBean.getUserName());
+            ((VideoViewHolder) holder).tvVideoUserName.setText(userName);
             ((VideoViewHolder) holder).tvVideoUserContent.setText(styled);
-            Glide.with(MyApplication.getContext()).load(needBean.getUserHeadImg()).into((
-                    (VideoViewHolder) holder).ivUserHeadImage);
-            ((VideoViewHolder) holder).jcVideoPlayer.setUp(needBean.getVideoUrl(),
-                    JCVideoPlayerStandard.SYSTEM_UI_FLAG_HIDE_NAVIGATION, needBean
-                            .getUserText());
-            Glide.with(MyApplication.getContext()).load(needBean.getVideoCoverUrl()).into((
-                    (VideoViewHolder) holder).jcVideoPlayer.thumbImageView);
-            ((VideoViewHolder) holder).tvVideoLikeCount.setText(needBean.getLikeCount()+"");
-            ((VideoViewHolder) holder).tvVideoLikeCount.setText(needBean.getDislikeCount()+"");
+            GlideUtils.showImage(userHeaderUrl, ((VideoViewHolder) holder).ivUserHeadImage);
+            ((VideoViewHolder) holder).jcVideoPlayer.setUp(dataBean.getGroup().getMp4Url(),
+                    JCVideoPlayerStandard.SYSTEM_UI_FLAG_HIDE_NAVIGATION, "正在播放");
+            GlideUtils.showImage(dataBean.getGroup().getCoverImageUrl(), ((VideoViewHolder)
+                    holder).jcVideoPlayer.thumbImageView);
+//            ((VideoViewHolder) holder).tvVideoLikeCount.setText(String.valueOf(needBean
+//                    .getLikeCount()));
+//            ((VideoViewHolder) holder).tvVideoLikeCount.setText(String.valueOf(needBean
+//                    .getDislikeCount()));
         }
-
-
 
     }
 
     @Override
     public int getItemCount() {
-        return needBeanList.size();
+        return dataBeanList.size();
     }
 
     @Override

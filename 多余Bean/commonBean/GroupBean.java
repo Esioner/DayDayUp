@@ -13,8 +13,8 @@ public class GroupBean {
     public String content;
     @SerializedName("user")
     public UserInfo userInfo;
-    @SerializedName("media_type")
-    public int mediaType;
+//    @SerializedName("media_type")
+//    public int mediaType;
     @SerializedName("bury_count")
     public int dislikeCount;
     @SerializedName("digg_count")
@@ -35,14 +35,14 @@ public class GroupBean {
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-
-    public int getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(int mediaType) {
-        this.mediaType = mediaType;
-    }
+//
+//    public int getMediaType() {
+//        return mediaType;
+//    }
+//
+//    public void setMediaType(int mediaType) {
+//        this.mediaType = mediaType;
+//    }
 
     public String getPrefix() {
         return prefix;

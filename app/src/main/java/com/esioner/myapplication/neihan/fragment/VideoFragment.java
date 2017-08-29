@@ -14,9 +14,8 @@ import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
 import com.esioner.myapplication.neihan._URL;
 import com.esioner.myapplication.neihan.adapter.MyCommonRecyclerViewAdapter;
-import com.esioner.myapplication.neihan.neihanbean.commonBean.Datas;
-import com.esioner.myapplication.neihan.neihanbean.commonBean.NeedBean;
-import com.esioner.myapplication.neihan.neihanbean.commonBean.NeiHanBean;
+import com.esioner.myapplication.neihan.neihanbean.NeiHanBean.NeiHanBean;
+import com.esioner.myapplication.neihan.neihanbean.NeiHanBean.NeiHanDataBean;
 import com.esioner.myapplication.utils.LogUtil;
 import com.esioner.myapplication.utils.OkHttpUtils;
 import com.google.gson.Gson;
@@ -37,7 +36,7 @@ import okhttp3.Response;
 
 public class VideoFragment extends Fragment {
 
-    private List<NeedBean> needBeanList = new ArrayList<>();
+    private List<NeiHanDataBean> dataBeanList = new ArrayList<>();
     private RecyclerView recyclerViewVideo;
     private SmartRefreshLayout smartRefreshLayout;
     private MyCommonRecyclerViewAdapter mAdapter;
@@ -75,7 +74,6 @@ public class VideoFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 
@@ -83,7 +81,7 @@ public class VideoFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadVideoData();
+//        loadVideoData();
     }
 
     @Override
@@ -92,7 +90,7 @@ public class VideoFragment extends Fragment {
     }
 
     public void refresh() {
-        needBeanList.clear();
+        dataBeanList.clear();
         loadVideoData();
     }
 
@@ -118,7 +116,7 @@ public class VideoFragment extends Fragment {
                 NeiHanBean neiHanBean = gson.fromJson(jokeBody, new TypeToken<NeiHanBean>() {
                 }.getType());
                 LogUtil.d("视频Json", neiHanBean.getMessage());
-                LogUtil.d("视频Tip", neiHanBean.getData().getTip());
+                LogUtil.d("视频Tip", neiHanBean.getData().getRefreshTip());
 
                 //遍历JokeBean
                 traverseData(neiHanBean);
@@ -128,40 +126,27 @@ public class VideoFragment extends Fragment {
     }
 
     //遍历JokeData
-    private void traverseData(NeiHanBean mNeiHanBean) {
-        NeedBean needBean;
-        mineTime = mNeiHanBean.getData().getMin_time() - 1000000;
+    private void traverseData(NeiHanBean neiHanBean) {
+        mineTime = neiHanBean.getData().getMinTime() - 1000000;
         LogUtil.i("MineTime", mineTime + "");
-        List<Datas> datases = mNeiHanBean.getData().getDatas();
-        List<NeedBean> lists = new ArrayList<>();
-        for (Datas datas : datases) {
-            if (datas.getGroup() != null) {
-                needBean = new NeedBean();
-                needBean.setUserName(datas.getGroup().getUserInfo().getName());
-                needBean.setUserHeadImg(datas.getGroup().getUserInfo()
-                        .getHeadImage());
-                needBean.setUserText(datas.getGroup().getContent());
-                needBean.setUserTextPrefix(datas.getGroup().getPrefix());
-                needBean.setMediaType(datas.getGroup().getMediaType());
-
-                needBean.setVideoUrl(datas.getGroup().getVideoUrl());
-                needBean.setVideoCoverUrl(datas.getGroup().getMediumCover().getUrlLists().get(0)
-                        .getUrl());
-                lists.add(needBean);
+        List<NeiHanDataBean> lists = new ArrayList<>();
+        for (NeiHanDataBean neiHanDataBean : neiHanBean.getData().getData()) {
+            if (neiHanDataBean.getGroup() != null) {
+                lists.add(neiHanDataBean);
             }
         }
-        needBeanList.addAll(lists);
+        dataBeanList.addAll(lists);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                showText(needBeanList);
+                showText(dataBeanList);
             }
         });
 
 
     }
 
-    private void showText(List<NeedBean> list) {
+    private void showText(List<NeiHanDataBean> list) {
         if (mAdapter == null) {
             mAdapter = new MyCommonRecyclerViewAdapter(list);
             recyclerViewVideo.setLayoutManager(new LinearLayoutManager(getContext()));
