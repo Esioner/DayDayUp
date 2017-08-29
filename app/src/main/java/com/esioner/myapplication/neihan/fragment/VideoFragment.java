@@ -81,7 +81,7 @@ public class VideoFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        loadVideoData();
+        loadVideoData();
     }
 
     @Override

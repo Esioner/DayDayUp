@@ -13,11 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
 import com.esioner.myapplication.neihan.neihanbean.NeiHanBean.NeiHanDataBean;
 import com.esioner.myapplication.utils.GlideUtils;
+import com.esioner.myapplication.utils.LogUtil;
 
 import java.util.List;
 
@@ -103,13 +103,14 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     public MyCommonRecyclerViewAdapter(List<NeiHanDataBean> list) {
         dataBeanList = list;
-        mediaType = dataBeanList.get(0).getGroup().getMediaType();
+//        mediaType = dataBeanList.get(0).getGroup().getMediaType();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
         RecyclerView.ViewHolder holder = null;
+        LogUtil.i("ViewType", "viewType = " + viewType);
         switch (viewType) {
             case JOKE_TYPE:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout
@@ -126,10 +127,12 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                         .nei_han_video_item, parent, false);
                 holder = new VideoViewHolder(view);
                 break;
-            case -1:
-                Toast.makeText(MyApplication.getContext(), "错误", Toast.LENGTH_SHORT).show();
-                break;
             default:
+                Toast.makeText(MyApplication.getContext(), "Type未知", Toast.LENGTH_SHORT).show();
+//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout
+//                        .nei_han_joke_item_layout, parent, false);
+//                holder = new JokeViewHolder(view);
+                break;
         }
         return holder;
     }
@@ -151,9 +154,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             ((JokeViewHolder) holder).tvJokeUserName.setText(userName);
             ((JokeViewHolder) holder).tvJokeContent.setText(styled);
             GlideUtils.showImage(userHeaderUrl, ((JokeViewHolder) holder).ivUserHeadImage);
-//            ((JokeViewHolder) holder).tvJokeLikeCount.setText(String.valueOf(diggCount));
-//            ((JokeViewHolder) holder).tvJokeDislikeCount.setText(String.valueOf(needBean
-//                    .getDislikeCount()));
+
         } else if (holder instanceof PictureViewHolder) {
             ((PictureViewHolder) holder).tvPictureUserName.setText(userName);
             ((PictureViewHolder) holder).tvPictureUserContent.setText(styled);
@@ -164,12 +165,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             GlideUtils.showImage(dataBean.getGroup().getLargeImage().getUrlLists().get(0).getUrl
                     (), ((PictureViewHolder) holder)
                     .ivPictureUserImage);
-//            //设置点赞数
-//            ((PictureViewHolder) holder).tvPictureLikeCount.setText(String.valueOf(needBean
-//                    .getLikeCount()));
-//            //设置点踩数
-//            ((PictureViewHolder) holder).tvPictureDislikeCount.setText(String.valueOf(needBean
-//                    .getDislikeCount()));
+
             //设置图片点击事件
             ((PictureViewHolder) holder).ivPictureUserImage.setOnClickListener(new View
                     .OnClickListener() {
@@ -187,13 +183,11 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             ((VideoViewHolder) holder).tvVideoUserContent.setText(styled);
             GlideUtils.showImage(userHeaderUrl, ((VideoViewHolder) holder).ivUserHeadImage);
             ((VideoViewHolder) holder).jcVideoPlayer.setUp(dataBean.getGroup().getMp4Url(),
-                    JCVideoPlayerStandard.SYSTEM_UI_FLAG_HIDE_NAVIGATION, "正在播放");
-            GlideUtils.showImage(dataBean.getGroup().getCoverImageUrl(), ((VideoViewHolder)
+                    JCVideoPlayerStandard.SYSTEM_UI_FLAG_HIDE_NAVIGATION, dataBean.getGroup()
+                            .getText());
+            GlideUtils.showImage(dataBean.getGroup().getLargeCover().getUrlLists().get(0).getUrl
+                    (), ((VideoViewHolder)
                     holder).jcVideoPlayer.thumbImageView);
-//            ((VideoViewHolder) holder).tvVideoLikeCount.setText(String.valueOf(needBean
-//                    .getLikeCount()));
-//            ((VideoViewHolder) holder).tvVideoLikeCount.setText(String.valueOf(needBean
-//                    .getDislikeCount()));
         }
 
     }
@@ -205,7 +199,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public int getItemViewType(int position) {
-        int viewType = -1;
+        mediaType = dataBeanList.get(position).getGroup().getMediaType();
+        int viewType = 0;
         switch (mediaType) {
             case 0:
                 viewType = JOKE_TYPE;
@@ -219,6 +214,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         }
         return viewType;
     }
+
 
 }
 
