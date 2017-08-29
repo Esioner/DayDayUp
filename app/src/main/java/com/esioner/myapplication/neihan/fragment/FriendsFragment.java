@@ -1,13 +1,19 @@
 package com.esioner.myapplication.neihan.fragment;
 
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esioner.myapplication.MyApplication;
@@ -16,6 +22,7 @@ import com.esioner.myapplication.neihan._URL;
 import com.esioner.myapplication.neihan.adapter.MyCommonRecyclerViewAdapter;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanBean;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanDataBean;
+import com.esioner.myapplication.utils.GlideUtils;
 import com.esioner.myapplication.utils.LogUtil;
 import com.esioner.myapplication.utils.OkHttpUtils;
 import com.google.gson.Gson;
@@ -29,17 +36,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+/**
+ * Created by Esioner on 2017/8/29.
+ */
 
-public class VideoFragment extends Fragment {
-
+public class FriendsFragment extends Fragment {
     private List<NeiHanDataBean> dataBeanList = new ArrayList<>();
     private RecyclerView recyclerViewVideo;
     private SmartRefreshLayout smartRefreshLayout;
-    private MyCommonRecyclerViewAdapter mAdapter;
+    private MyRecyclerViewGridAdapter mAdapter;
     private double mineTime = MyApplication.getUnixTime() - 1000000;
 
     @Override
@@ -99,8 +109,10 @@ public class VideoFragment extends Fragment {
     }
 
     private void loadVideoData() {
-        String urlJoke = "http://is.snssdk.com/neihan/stream/mix/v1/?content_type=-104&" + _URL
-                .getVideoJointUrlParameter(30 + "", mineTime + "");
+//        String urlJoke = "http://iu.snssdk.com/neihan/stream/mix/v1/?content_type=-301&" + _URL
+//                .getVideoJointUrlParameter(30 + "", mineTime + "");
+        String urlJoke = "http://iu.snssdk.com/neihan/stream/mix/v1/?mpic=1&webp=1&essence=1&content_type=-301&message_cursor=-1&am_longitude=110&am_latitude=120&am_city=%E5%8C%97%E4%BA%AC%E5%B8%82&am_loc_time=1463225362814&count=30&min_time=1489205906&screen_width=1450&do00le_col_mode=1&iid=3216590132&device_id=32613520945&ac=wifi&channel=360&aid=7&app_name=joke_essay&version_code=612&version_name=6.1.2&device_platform=android&ssmix=a&device_type=sansung&device_brand=xiaomi&os_api=28&os_version=6.10.1&uuid=326135942187625&openudid=3dg6s95rhg2a3dg5&manifest_version_code=612&resolution=1450*2800&dpi=620&update_version_code=6120";
+
         LogUtil.d("Video_URL", urlJoke);
         OkHttpUtils.getInstance().asyncGet(urlJoke.replace(" ", ""), new Callback() {
             @Override
@@ -111,12 +123,10 @@ public class VideoFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String jokeBody = response.body().string();
-                LogUtil.d("JOKE_BODY", jokeBody);
+                LogUtil.d("Friends", jokeBody);
                 Gson gson = new Gson();
                 NeiHanBean neiHanBean = gson.fromJson(jokeBody, new TypeToken<NeiHanBean>() {
                 }.getType());
-                LogUtil.d("视频Json", neiHanBean.getMessage());
-                LogUtil.d("视频Tip", neiHanBean.getData().getRefreshTip());
 
                 //遍历JokeBean
                 traverseData(neiHanBean);
@@ -148,12 +158,61 @@ public class VideoFragment extends Fragment {
 
     private void showText(List<NeiHanDataBean> list) {
         if (mAdapter == null) {
-            mAdapter = new MyCommonRecyclerViewAdapter(list);
-            recyclerViewVideo.setLayoutManager(new LinearLayoutManager(getContext()));
+            mAdapter = new MyRecyclerViewGridAdapter(list);
+            StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+            recyclerViewVideo.setLayoutManager(manager);
             recyclerViewVideo.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
         }
     }
+
+    class MyRecyclerViewGridAdapter extends RecyclerView.Adapter<MyRecyclerViewGridAdapter.ViewHolder> {
+        List<NeiHanDataBean> dataBeenList;
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            private final ImageView neiHanFriendImage;
+            private final TextView userContent;
+            private final TextView userName;
+            private final CircleImageView ivHeaderImage;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                neiHanFriendImage = (ImageView) itemView.findViewById(R.id.nei_han_friends_iv);
+                userContent = (TextView) itemView.findViewById(R.id.tv_nei_han_friends_user_content);
+                userName = (TextView) itemView.findViewById(R.id.tv_nei_han_friends_user_name);
+                ivHeaderImage = (CircleImageView) itemView.findViewById(R.id.iv_nei_han_friends_header_image);
+            }
+        }
+
+        public MyRecyclerViewGridAdapter(List<NeiHanDataBean> list) {
+            dataBeenList = list;
+        }
+
+        @Override
+        public MyRecyclerViewGridAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.nei_han_friends_item_layout, viewGroup, false);
+            ViewHolder holder = new ViewHolder(view);
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(MyRecyclerViewGridAdapter.ViewHolder holder, int i) {
+            NeiHanDataBean dataBean = dataBeenList.get(i);
+//            holder.ivHeaderImage
+            GlideUtils.showImage(dataBean.getGroup().getLargeCover().getUrlLists().get(0).getUrl(), holder.neiHanFriendImage);
+            GlideUtils.showImage(dataBean.getGroup().getUserInfo().getAvatarUrl(), holder.ivHeaderImage);
+            holder.userName.setText(dataBean.getGroup().getUserInfo().getName());
+            holder.userContent.setText(dataBean.getGroup().getContent());
+        }
+
+        @Override
+        public int getItemCount() {
+            return dataBeenList.size();
+        }
+
+    }
+
 
 }

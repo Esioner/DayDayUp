@@ -1,4 +1,4 @@
-package com.esioner.myapplication.neihan.neihanbean.NeiHanBean;
+package com.esioner.myapplication.neihan.neihanbean.neiHanBean;
 
 public class UrlList {
     String url;

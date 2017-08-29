@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/smart_refresh_layout_recommend"
+    android:background="@color/apricotYellow"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <com.scwang.smartrefresh.header.CircleHeader
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_recommend"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="这是推荐Fragment"
-        android:gravity="center"
-        android:textSize="50dp"/>
-</LinearLayout>
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp">
+    </android.support.v7.widget.RecyclerView>
+
+    <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlAccentColor="@color/colorAccent"
+        />
+
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

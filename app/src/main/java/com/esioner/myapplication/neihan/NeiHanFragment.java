@@ -13,7 +13,8 @@ import android.widget.Toolbar;
 
 import com.esioner.myapplication.R;
 import com.esioner.myapplication.neihan.adapter.MyFragmentPageAdapter;
-import com.esioner.myapplication.neihan.fragment.FriendFragment;
+
+import com.esioner.myapplication.neihan.fragment.FriendsFragment;
 import com.esioner.myapplication.neihan.fragment.JokeFragment;
 import com.esioner.myapplication.neihan.fragment.PictureFragment;
 import com.esioner.myapplication.neihan.fragment.RecommendFragment;
@@ -147,18 +148,16 @@ public class NeiHanFragment extends Fragment {
 
     private void initView() {
         JokeFragment jokeFragment = new JokeFragment();
-        FriendFragment friendFragment = new FriendFragment();
         PictureFragment pictureFragment = new PictureFragment();
         VideoFragment videoFragment = new VideoFragment();
         RecommendFragment recommendFragment = new RecommendFragment();
-
+        FriendsFragment friendsFragment = new FriendsFragment();
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(recommendFragment);
         fragments.add(jokeFragment);
         fragments.add(pictureFragment);
         fragments.add(videoFragment);
-        fragments.add(friendFragment);
-
+        fragments.add(friendsFragment);
         MyFragmentPageAdapter adapter = new MyFragmentPageAdapter(getChildFragmentManager(),
                 fragments);
         viewPagerNeiHan.setOffscreenPageLimit(5);

@@ -1,4 +1,4 @@
-package com.esioner.myapplication.neihan.neihanbean.NeiHanBean;
+package com.esioner.myapplication.neihan.neihanbean.neiHanBean;
 
 import com.google.gson.annotations.SerializedName;
 

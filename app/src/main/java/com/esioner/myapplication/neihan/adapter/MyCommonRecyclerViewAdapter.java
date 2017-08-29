@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
-import com.esioner.myapplication.neihan.neihanbean.NeiHanBean.NeiHanDataBean;
+import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanDataBean;
 import com.esioner.myapplication.utils.GlideUtils;
 import com.esioner.myapplication.utils.LogUtil;
 
@@ -44,14 +44,14 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         private final TextView tvJokeContent;
         private final CircleImageView ivUserHeadImage;
         private final View view;
-        private final TextView tvJokeLikeCount;
-        private final TextView tvJokeDislikeCount;
+        private final TextView tvDiggCount;
+        private final TextView tvBuryCount;
 
         public JokeViewHolder(View itemView) {
             super(itemView);
             view = itemView.findViewById(R.id.card_view);
-            tvJokeLikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_like);
-            tvJokeDislikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_dislike);
+            tvDiggCount = (TextView) itemView.findViewById(R.id.tv_nei_han_digg);
+            tvBuryCount = (TextView) itemView.findViewById(R.id.tv_nei_han_bury);
             tvJokeUserName = (TextView) itemView.findViewById(R.id.tv_joke_user_name);
             tvJokeContent = (TextView) itemView.findViewById(R.id.tv_joke_content);
             ivUserHeadImage = (CircleImageView) itemView.findViewById(R.id.user_head_image);
@@ -64,8 +64,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         private final TextView tvPictureUserContent;
         private final ImageView ivPictureUserImage;
         private final CircleImageView ivPictureUserHeadImage;
-        private final TextView tvPictureLikeCount;
-        private final TextView tvPictureDislikeCount;
+        private final TextView tvDiggCount;
+        private final TextView tvBuryCount;
 
         public PictureViewHolder(View itemView) {
             super(itemView);
@@ -74,8 +74,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             ivPictureUserImage = (ImageView) itemView.findViewById(R.id.iv_picture_image);
             ivPictureUserHeadImage = (CircleImageView) itemView.findViewById(R.id
                     .iv_picture_user_head_image);
-            tvPictureLikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_like);
-            tvPictureDislikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_dislike);
+            tvDiggCount = (TextView) itemView.findViewById(R.id.tv_nei_han_digg);
+            tvBuryCount = (TextView) itemView.findViewById(R.id.tv_nei_han_bury);
         }
     }
 
@@ -85,8 +85,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         private final CircleImageView ivUserHeadImage;
         private final TextView tvVideoUserContent;
         private final TextView tvVideoUserName;
-        private final TextView tvVideoLikeCount;
-        private final TextView tvVideoDisikeCount;
+        private final TextView tvDiggCount;
+        private final TextView tvBuryCount;
 
         public VideoViewHolder(View itemView) {
             super(itemView);
@@ -96,8 +96,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                     .iv_video_user_head_image);
             jcVideoPlayer = (JCVideoPlayerStandard) itemView.findViewById(R.id
                     .nei_han_video_player);
-            tvVideoLikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_like);
-            tvVideoDisikeCount = (TextView) itemView.findViewById(R.id.tv_nei_han_dislike);
+            tvDiggCount = (TextView) itemView.findViewById(R.id.tv_nei_han_digg);
+            tvBuryCount = (TextView) itemView.findViewById(R.id.tv_nei_han_bury);
         }
     }
 
@@ -129,9 +129,6 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                 break;
             default:
                 Toast.makeText(MyApplication.getContext(), "Type未知", Toast.LENGTH_SHORT).show();
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout
-//                        .nei_han_joke_item_layout, parent, false);
-//                holder = new JokeViewHolder(view);
                 break;
         }
         return holder;
@@ -148,11 +145,14 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
         String userName = dataBean.getGroup().getUserInfo().getName();
         String userHeaderUrl = dataBean.getGroup().getUserInfo().getAvatarUrl();
-        int diggCount = dataBean.getGroup().getDiggCount();
+        String diggCount = String.valueOf(dataBean.getGroup().getDiggCount());
+        String buryCount = String.valueOf(dataBean.getGroup().getBuryCount());
 
         if (holder instanceof JokeViewHolder) {
             ((JokeViewHolder) holder).tvJokeUserName.setText(userName);
             ((JokeViewHolder) holder).tvJokeContent.setText(styled);
+            ((JokeViewHolder) holder).tvBuryCount.setText(buryCount);
+            ((JokeViewHolder) holder).tvDiggCount.setText(diggCount);
             GlideUtils.showImage(userHeaderUrl, ((JokeViewHolder) holder).ivUserHeadImage);
 
         } else if (holder instanceof PictureViewHolder) {
@@ -165,7 +165,8 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             GlideUtils.showImage(dataBean.getGroup().getLargeImage().getUrlLists().get(0).getUrl
                     (), ((PictureViewHolder) holder)
                     .ivPictureUserImage);
-
+            ((PictureViewHolder) holder).tvBuryCount.setText(buryCount);
+            ((PictureViewHolder) holder).tvDiggCount.setText(diggCount);
             //设置图片点击事件
             ((PictureViewHolder) holder).ivPictureUserImage.setOnClickListener(new View
                     .OnClickListener() {
@@ -188,6 +189,10 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             GlideUtils.showImage(dataBean.getGroup().getLargeCover().getUrlLists().get(0).getUrl
                     (), ((VideoViewHolder)
                     holder).jcVideoPlayer.thumbImageView);
+
+            ((VideoViewHolder) holder).tvBuryCount.setText(buryCount);
+            ((VideoViewHolder) holder).tvDiggCount.setText(diggCount);
+
         }
 
     }
@@ -200,7 +205,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public int getItemViewType(int position) {
         mediaType = dataBeanList.get(position).getGroup().getMediaType();
-        int viewType = 0;
+        int viewType = JOKE_TYPE;
         switch (mediaType) {
             case 0:
                 viewType = JOKE_TYPE;
@@ -215,6 +220,9 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         return viewType;
     }
 
+    private void setItemBar(RecyclerView.ViewHolder holder, NeiHanDataBean dataBean) {
+
+    }
 
 }
 

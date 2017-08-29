@@ -1,13 +1,13 @@
-package com.esioner.myapplication.neihan.neihanbean.NeiHanBean;
+package com.esioner.myapplication.neihan.neihanbean.neiHanBean;
 
-
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class NeiHanBean {
 
+    /**
+     * 成功时为 success
+     */
     private String message;
+
     private NeiHanRootDataBean data;
 
     public String getMessage() {

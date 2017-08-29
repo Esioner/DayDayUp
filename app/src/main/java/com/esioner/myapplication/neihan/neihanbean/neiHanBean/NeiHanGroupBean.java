@@ -1,15 +1,7 @@
-package com.esioner.myapplication.neihan.neihanbean.NeiHanBean;
+package com.esioner.myapplication.neihan.neihanbean.neiHanBean;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-/**
- * Create: 2017/8/29
- * Writer: liurui
- * Phone:  13554142421
- * Email:  16801630@qq.com
- */
 
 public class NeiHanGroupBean {
     //num
@@ -21,6 +13,7 @@ public class NeiHanGroupBean {
     @SerializedName("allow_dislike")
     private boolean allowDislike;
     //B
+    //不顶次数
     @SerializedName("bury_count")
     private int buryCount;
     //C
@@ -34,7 +27,7 @@ public class NeiHanGroupBean {
 
     @SerializedName("category_visible")
     private boolean categoryVisible;
-
+    //视频描述
     private String content;
     @SerializedName("comment_count")
     private int commentCount;
@@ -53,7 +46,7 @@ public class NeiHanGroupBean {
     @SerializedName("download_url")
     public String downloadUrl;
     public double duration;
-
+    //点赞数量
     @SerializedName("digg_count")
     private int diggCount;
     //    @SerializedName("dislike_reason")
@@ -123,6 +116,7 @@ public class NeiHanGroupBean {
     /**
      * Video
      */
+    //视屏截图
     @SerializedName("large_cover")
     private NeiHanImageBean largeCover;
     @SerializedName("m3u8_url")
@@ -165,6 +159,7 @@ public class NeiHanGroupBean {
     private NeiHanVideoBean originVideo;
 
     //P
+    //播放次数
     @SerializedName("play_count")
     private int playCount;
     @SerializedName("publish_time")
@@ -179,6 +174,7 @@ public class NeiHanGroupBean {
     @SerializedName("repin_count")
     private int repinCount;
     //S
+    //转发数量
     @SerializedName("share_count")
     private int shareCount;
     @SerializedName("share_type")
@@ -192,6 +188,7 @@ public class NeiHanGroupBean {
     private String text;
     private int type;
     //U
+    //作者信息
     @SerializedName("user")
     private NeiHanUserBean userInfo;
     @SerializedName("user_bury")

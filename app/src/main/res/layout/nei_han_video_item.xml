@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/apricotYellow"
+    android:orientation="vertical"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,8 +27,7 @@
                 android:id="@+id/iv_video_user_head_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/link"
-                />
+                android:src="@drawable/link" />
 
             <TextView
                 android:id="@+id/tv_video_user_name"
@@ -31,8 +37,7 @@
                 android:gravity="center_vertical"
                 android:text="我的名字就很长"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
@@ -41,15 +46,76 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩，今天天气很不错，想出去玩玩。。。"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
 
         <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
             android:id="@+id/nei_han_video_player"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="300dp" />
 
-        <include layout="@layout/nei_han_item_bar"/>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp">
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_nei_han_like" />
+
+                <TextView
+                    android:id="@+id/tv_nei_han_digg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:gravity="bottom"
+                    android:text="2000" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp">
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_nei_nei_han_dislike" />
+
+                <TextView
+                    android:id="@+id/tv_nei_han_bury"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:gravity="bottom"
+                    android:text="200" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:gravity="right">
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/nei_han_share" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 

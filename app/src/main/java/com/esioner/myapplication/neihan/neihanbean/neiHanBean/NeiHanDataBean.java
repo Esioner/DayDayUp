@@ -1,4 +1,4 @@
-package com.esioner.myapplication.neihan.neihanbean.NeiHanBean;
+package com.esioner.myapplication.neihan.neihanbean.neiHanBean;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public class NeiHanDataBean {
-
+    //评论
     private List<?> comments;
     private NeiHanGroupBean group;
     private int type;

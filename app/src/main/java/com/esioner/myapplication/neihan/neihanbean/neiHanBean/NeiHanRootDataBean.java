@@ -1,4 +1,4 @@
-package com.esioner.myapplication.neihan.neihanbean.NeiHanBean;
+package com.esioner.myapplication.neihan.neihanbean.neiHanBean;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,11 +7,13 @@ import java.util.List;
 
 
 public class NeiHanRootDataBean {
-
+    //是否有更多
     @SerializedName("has_more")
     private boolean hasMore;
+    //更新提示
     @SerializedName("tip")
     private String refreshTip;
+    //是否有新的数据
     @SerializedName("has_new_message")
     private boolean hasNewMessage;
     @SerializedName("max_time")
