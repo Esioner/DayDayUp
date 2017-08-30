@@ -40,16 +40,16 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.nei_han_tool_bar);
-
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(true);//使导航按钮显示出来
-            actionBar.setHomeAsUpIndicator(R.drawable.tool_bar_home);
-        }
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.nei_han_tool_bar);
+//
+//        setSupportActionBar(toolbar);
+//
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setDisplayShowTitleEnabled(true);//使导航按钮显示出来
+//            actionBar.setHomeAsUpIndicator(R.drawable.tool_bar_home);
+//        }
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);

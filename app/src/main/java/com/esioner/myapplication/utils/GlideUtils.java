@@ -14,15 +14,18 @@ public class GlideUtils {
 
     public static void showImage(String url, View view) {
         RequestOptions mOptions = new RequestOptions()
-                .placeholder(R.drawable.placeholder)
+                .placeholder(R.drawable.place_holder_image)
                 .error(R.drawable.error)
                 ;
         Glide.with(MyApplication.getContext()).load(url)
                 .apply(mOptions)
                 .transition(new DrawableTransitionOptions().crossFade(500))
-//                .transition(new DrawableTransitionOptions().crossFade(R.anim.rota))
                 .into((ImageView) view);
+//        Glide.with(MyApplication.getContext()).load(url).placeholder(R.drawable.place_holder_image).error(R.drawable.error).into((ImageView) view);
+    }
 
+    public static void showGifImage() {
+        
     }
 
 }

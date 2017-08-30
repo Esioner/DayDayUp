@@ -9,7 +9,7 @@
         android:id="@+id/tab_layout_nei_han"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#203f51bf">
+        android:background="#fff">
 
     </android.support.design.widget.TabLayout>
 
