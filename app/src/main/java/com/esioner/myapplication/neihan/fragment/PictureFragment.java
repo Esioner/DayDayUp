@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
+import com.esioner.myapplication.neihan.MessageEvent;
+import com.esioner.myapplication.neihan.NeiHanFragment;
 import com.esioner.myapplication.neihan._URL;
 import com.esioner.myapplication.neihan.adapter.MyCommonRecyclerViewAdapter;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanBean;
@@ -24,6 +27,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +44,8 @@ public class PictureFragment extends Fragment {
     private SmartRefreshLayout smartRefreshLayout;
     private MyCommonRecyclerViewAdapter mAdapter;
     private double mineTime = MyApplication.getUnixTime() - 1000000;
+
+    public static boolean PICTURE_IS_OK = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, @Nullable
@@ -100,6 +107,7 @@ public class PictureFragment extends Fragment {
         String urlJoke = "http://is.snssdk.com/neihan/stream/mix/v1/?content_type=-103&" + _URL
                 .getImageJointUrlParameter(30 + "", mineTime + "");
         LogUtil.d("URL", urlJoke);
+
         OkHttpUtils.getInstance().asyncGet(urlJoke.replace(" ", ""), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -130,6 +138,10 @@ public class PictureFragment extends Fragment {
         for (NeiHanDataBean neiHanDataBean : neiHanBean.getData().getData()) {
             if (neiHanDataBean.getGroup() != null) {
                 lists.add(neiHanDataBean);
+//                LogUtil.i("gif", neiHanDataBean.getGroup().getIsGif() + "");
+//                if (neiHanDataBean.getGroup().getIsGif()==1){
+//                    LogUtil.i("GIF_URL",neiHanDataBean.getGroup().getLargeImage().getUrlLists().get(0).getUrl());
+//                }
             }
         }
         dataBeanList.addAll(lists);
@@ -148,6 +160,8 @@ public class PictureFragment extends Fragment {
             mAdapter = new MyCommonRecyclerViewAdapter(list);
             recyclerViewPicture.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerViewPicture.setAdapter(mAdapter);
+            EventBus.getDefault().post(new MessageEvent(NeiHanFragment.PICTURE_TASK,true));
+
         } else {
             mAdapter.notifyDataSetChanged();
         }

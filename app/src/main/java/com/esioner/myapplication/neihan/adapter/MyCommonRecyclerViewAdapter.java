@@ -9,10 +9,12 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanDataBean;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import me.xiaopan.sketch.SketchImageView;
 
 
 public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -32,6 +35,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     /**
      * 段子 0
      * 图片 1
+     * GIF 2
      * 段友秀 ，视频 3
      */
     private int mediaType;
@@ -46,6 +50,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         private final View view;
         private final TextView tvDiggCount;
         private final TextView tvBuryCount;
+        private final ImageButton btnShare;
 
         public JokeViewHolder(View itemView) {
             super(itemView);
@@ -55,6 +60,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             tvJokeUserName = (TextView) itemView.findViewById(R.id.tv_joke_user_name);
             tvJokeContent = (TextView) itemView.findViewById(R.id.tv_joke_content);
             ivUserHeadImage = (CircleImageView) itemView.findViewById(R.id.user_head_image);
+            btnShare = (ImageButton) itemView.findViewById(R.id.btn_share);
         }
     }
 
@@ -62,7 +68,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
         private final TextView tvPictureUserName;
         private final TextView tvPictureUserContent;
-        private final ImageView ivPictureUserImage;
+        private final SketchImageView ivPictureUserImage;
         private final CircleImageView ivPictureUserHeadImage;
         private final TextView tvDiggCount;
         private final TextView tvBuryCount;
@@ -71,7 +77,7 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             super(itemView);
             tvPictureUserName = (TextView) itemView.findViewById(R.id.tv_picture_user_name);
             tvPictureUserContent = (TextView) itemView.findViewById(R.id.tv_picture_content);
-            ivPictureUserImage = (ImageView) itemView.findViewById(R.id.iv_picture_image);
+            ivPictureUserImage = (SketchImageView) itemView.findViewById(R.id.iv_picture_image);
             ivPictureUserHeadImage = (CircleImageView) itemView.findViewById(R.id
                     .iv_picture_user_head_image);
             tvDiggCount = (TextView) itemView.findViewById(R.id.tv_nei_han_digg);
@@ -154,6 +160,17 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             ((JokeViewHolder) holder).tvBuryCount.setText(buryCount);
             ((JokeViewHolder) holder).tvDiggCount.setText(diggCount);
             GlideUtils.showImage(userHeaderUrl, ((JokeViewHolder) holder).ivUserHeadImage);
+            ((JokeViewHolder) holder).btnShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent textIntent = new Intent(Intent.ACTION_SEND);
+                    textIntent.setType("text/plain");
+                    textIntent.putExtra(Intent.EXTRA_TEXT, dataBean.getGroup()
+                            .getText());
+                    MyApplication.getContext().startActivity(Intent.createChooser(textIntent,
+                            "分享"));
+                }
+            });
 
         } else if (holder instanceof PictureViewHolder) {
             ((PictureViewHolder) holder).tvPictureUserName.setText(userName);
@@ -162,9 +179,25 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             GlideUtils.showImage(userHeaderUrl, ((PictureViewHolder) holder)
                     .ivPictureUserHeadImage);
             //加载图片
-            GlideUtils.showImage(dataBean.getGroup().getLargeImage().getUrlLists().get(0).getUrl
-                    (), ((PictureViewHolder) holder)
-                    .ivPictureUserImage);
+            if (dataBean.getGroup().getIsGif() == 1) {
+                LogUtil.i("GIF_URL", "Url : " + dataBean.getGroup().getLargeImage().getUrlLists()
+                        .get(0).getUrl());
+                GlideUtils.showGifImage(dataBean.getGroup().getLargeImage()
+                                .getUrlLists().get(0).getUrl(),
+                        ((PictureViewHolder) holder)
+                                .ivPictureUserImage);
+            } else if (dataBean.getGroup().getIsGif() == 0) {
+                GlideUtils.showImage(dataBean.getGroup().getLargeImage().getUrlLists().get(0).getUrl
+                        (), ((PictureViewHolder) holder)
+                        .ivPictureUserImage);
+                LogUtil.i("PNG_URL", "Url : " + dataBean.getGroup().getLargeImage().getUrlLists()
+                        .get(0).getUrl());
+            }
+
+//            Glide.with(MyApplication.getContext()).load(dataBean.getGroup().getLargeImage()
+// .getUrlLists().get(0).getUrl
+//                    ()).into( ((PictureViewHolder) holder)
+//                    .ivPictureUserImage);
             ((PictureViewHolder) holder).tvBuryCount.setText(buryCount);
             ((PictureViewHolder) holder).tvDiggCount.setText(diggCount);
             //设置图片点击事件
@@ -211,6 +244,9 @@ public class MyCommonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                 viewType = JOKE_TYPE;
                 break;
             case 1:
+                viewType = PICTURE_TYPE;
+                break;
+            case 2:
                 viewType = PICTURE_TYPE;
                 break;
             case 3:

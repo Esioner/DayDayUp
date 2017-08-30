@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
+import com.esioner.myapplication.neihan.MessageEvent;
+import com.esioner.myapplication.neihan.NeiHanFragment;
 import com.esioner.myapplication.neihan._URL;
 import com.esioner.myapplication.neihan.adapter.MyCommonRecyclerViewAdapter;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanBean;
@@ -24,6 +26,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +46,8 @@ public class JokeFragment extends Fragment {
     private double mineTime = MyApplication.getUnixTime() - 1000000;
     private String refreshTips;
     private boolean isFirst = true;
+
+    public static boolean JOKE_IS_OK = false;
 
 
     @Override
@@ -152,6 +158,8 @@ public class JokeFragment extends Fragment {
             recyclerViewJoke.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerViewJoke.setAdapter(mAdapter);
             isFirst = false;
+            EventBus.getDefault().post(new MessageEvent(NeiHanFragment.JOKE_TASK,true));
+
         } else {
             mAdapter.notifyDataSetChanged();
         }

@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
+import com.esioner.myapplication.neihan.MessageEvent;
+import com.esioner.myapplication.neihan.NeiHanFragment;
 import com.esioner.myapplication.neihan._URL;
 import com.esioner.myapplication.neihan.adapter.MyCommonRecyclerViewAdapter;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanBean;
@@ -32,6 +34,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +56,8 @@ public class FriendsFragment extends Fragment {
     private SmartRefreshLayout smartRefreshLayout;
     private MyRecyclerViewGridAdapter mAdapter;
     private double mineTime = MyApplication.getUnixTime() - 1000000;
+
+    public static boolean FRIEND_IS_OK = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,18 +116,18 @@ public class FriendsFragment extends Fragment {
     }
 
     private void loadVideoData() {
-//        String urlJoke = "http://iu.snssdk.com/neihan/stream/mix/v1/?content_type=-301&" + _URL
-//                .getVideoJointUrlParameter(30 + "", mineTime + "");
-        String urlJoke = "http://iu.snssdk" +
-                ".com/neihan/stream/mix/v1/?mpic=1&webp=1&essence=1&content_type=-301" +
-                "&message_cursor=-1&am_longitude=110&am_latitude=120&am_city=%E5%8C%97%E4%BA%AC" +
-                "%E5%B8%82&am_loc_time=1463225362814&count=30&min_time=1489205906&screen_width" +
-                "=1450&do00le_col_mode=1&iid=3216590132&device_id=32613520945&ac=wifi&channel=360" +
-                "&aid=7&app_name=joke_essay&version_code=612&version_name=6.1" +
-                ".2&device_platform=android&ssmix=a&device_type=sansung&device_brand=xiaomi" +
-                "&os_api=28&os_version=6.10" +
-                ".1&uuid=326135942187625&openudid=3dg6s95rhg2a3dg5&manifest_version_code=612" +
-                "&resolution=1450*2800&dpi=620&update_version_code=6120";
+        String urlJoke = "http://iu.snssdk.com/neihan/stream/mix/v1/?content_type=-301";
+//                + _URL.getVideoJointUrlParameter(20 + "", mineTime + "");
+//        String urlJoke = "http://iu.snssdk" +
+//                ".com/neihan/stream/mix/v1/?mpic=1&webp=1&essence=1&content_type=-301" +
+//                "&message_cursor=-1&am_longitude=110&am_latitude=120&am_city=%E5%8C%97%E4%BA%AC" +
+//                "%E5%B8%82&am_loc_time=1463225362814&count=30&min_time=1489205906&screen_width" +
+//                "=1450&do00le_col_mode=1&iid=3216590132&device_id=32613520945&ac=wifi&channel=360" +
+//                "&aid=7&app_name=joke_essay&version_code=612&version_name=6.1" +
+//                ".2&device_platform=android&ssmix=a&device_type=sansung&device_brand=xiaomi" +
+//                "&os_api=28&os_version=6.10" +
+//                ".1&uuid=326135942187625&openudid=3dg6s95rhg2a3dg5&manifest_version_code=612" +
+//                "&resolution=1450*2800&dpi=620&update_version_code=6120";
 
         LogUtil.d("Video_URL", urlJoke);
         OkHttpUtils.getInstance().asyncGet(urlJoke.replace(" ", ""), new Callback() {
@@ -173,6 +179,7 @@ public class FriendsFragment extends Fragment {
                     (2, StaggeredGridLayoutManager.VERTICAL);
             recyclerViewVideo.setLayoutManager(manager);
             recyclerViewVideo.setAdapter(mAdapter);
+            EventBus.getDefault().post(new MessageEvent(NeiHanFragment.FRIEND_TASK,true));
         } else {
             mAdapter.notifyDataSetChanged();
         }

@@ -1,5 +1,6 @@
 package com.esioner.myapplication.neihan;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,7 +14,6 @@ import android.widget.Toolbar;
 
 import com.esioner.myapplication.R;
 import com.esioner.myapplication.neihan.adapter.MyFragmentPageAdapter;
-
 import com.esioner.myapplication.neihan.fragment.FriendsFragment;
 import com.esioner.myapplication.neihan.fragment.JokeFragment;
 import com.esioner.myapplication.neihan.fragment.PictureFragment;
@@ -26,6 +26,10 @@ import com.esioner.myapplication.utils.OkHttpUtils;
 import com.esioner.myapplication.utils.SPUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -51,7 +55,14 @@ public class NeiHanFragment extends Fragment {
     private TypeData mPictureTypeData;
     private TypeData mJokeTypeData;
     private Toolbar toolbar;
+    private ProgressDialog mProgressDialog;
     //    private TypeData
+    public static int RECOMMEND_TASK = 0;
+    public static int JOKE_TASK = 1;
+    public static int PICTURE_TASK = 2;
+    public static int VIDEO_TASK = 3;
+    public static int FRIEND_TASK = 4;
+
 
     @Nullable
     @Override
@@ -61,6 +72,7 @@ public class NeiHanFragment extends Fragment {
 
         tabLayoutNeiHan = (TabLayout) view.findViewById(R.id.tab_layout_nei_han);
         viewPagerNeiHan = (ViewPager) view.findViewById(R.id.viewpager_nei_han_content);
+        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -68,7 +80,42 @@ public class NeiHanFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+        mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog.setMessage("正在加载数据，请稍后");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMoonEvent(MessageEvent event) {
+        int i = 0;
+        while (i<5) {
+            if (event.getTaskName() == PICTURE_TASK) {
+                if (event.isStatus()) {
+                    i++;
+                }
+            } else if (event.getTaskName() == VIDEO_TASK) {
+                if (event.isStatus()) {
+                    i++;
+                }
+            } else if (event.getTaskName() == JOKE_TASK) {
+                if (event.isStatus()) {
+                    i++;
+                }
+            } else if (event.getTaskName() == RECOMMEND_TASK) {
+                if (event.isStatus()) {
+                    i++;
+                }
+            } else if (event.getTaskName() == FRIEND_TASK) {
+                if (event.isStatus()) {
+                    i++;
+                }
+            }
+        }
+        if (i == 5) {
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -76,6 +123,12 @@ public class NeiHanFragment extends Fragment {
         super.onResume();
         //初始化 contentType
         initContentType();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initContentType() {

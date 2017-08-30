@@ -1,77 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:fitsSystemWindows="true"
               android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:background="@color/apricotYellow"
-              android:layout_height="match_parent">
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_one_article_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="这是一个标题"
+        android:layout_weight="1"
         android:gravity="center"
-        android:textSize="26sp"
-        android:layout_weight="1"/>
+        android:text="这是一个标题"
+        android:textSize="26sp"/>
+
     <TextView
+        android:id="@+id/tv_one_article_author"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:textSize="16sp"
+        android:layout_weight="0.5"
         android:gravity="center"
         android:text="作者：莫言"
-        android:textStyle="bold"
-        android:id="@+id/tv_one_article_author"
-        android:layout_weight="0.5"/>
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_weight="18"
-        android:layout_marginStart="10dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="5dp"
-        android:layout_height="0dp">
+        android:layout_marginStart="10dp"
+        android:layout_weight="18">
 
         <TextView
             android:id="@+id/tv_one_article_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:lineSpacingMultiplier="1.5"
-            android:textSize="24sp"
             android:text="@string/tv"
+            android:textSize="24sp"
             />
     </ScrollView>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="0.5">
-    <TextView
-        android:id="@+id/tv_one_article_previous_day"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:textSize="12sp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="20170817"
-        />
-    <TextView
-        android:id="@+id/tv_one_article_current_day"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:text="20170818"
-        />
-    <TextView
-        android:id="@+id/tv_one_article_next_day"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:textSize="12sp"
-        android:text="20170819"
-        />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+
+        <TextView
+            android:id="@+id/tv_one_article_previous_day"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="20170817"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_one_article_current_day"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="20170818"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_one_article_next_day"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="20170819"
+            android:textSize="12sp"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
