@@ -3,12 +3,8 @@ package com.esioner.myapplication.neihan.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
-import com.esioner.myapplication.neihan.MessageEvent;
-import com.esioner.myapplication.neihan.NeiHanFragment;
-import com.esioner.myapplication.neihan._URL;
-import com.esioner.myapplication.neihan.adapter.MyCommonRecyclerViewAdapter;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanBean;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanDataBean;
 import com.esioner.myapplication.utils.GlideUtils;
@@ -34,8 +25,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +39,7 @@ import okhttp3.Response;
  * Created by Esioner on 2017/8/29.
  */
 
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends BaseFragment {
     private List<NeiHanDataBean> dataBeanList = new ArrayList<>();
     private RecyclerView recyclerViewVideo;
     private SmartRefreshLayout smartRefreshLayout;
@@ -60,45 +49,9 @@ public class FriendsFragment extends Fragment {
     public static boolean FRIEND_IS_OK = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.nei_han_video_fragment, container, false);
-        recyclerViewVideo = (RecyclerView) view.findViewById(R.id.recycler_view_nei_han_video);
-
-        smartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id
-                .smart_refresh_layout_video);
-
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refresh();
-                Toast.makeText(getActivity().getApplicationContext(), "正在刷新", Toast.LENGTH_SHORT)
-                        .show();
-                if (smartRefreshLayout.isRefreshing()) {
-                    smartRefreshLayout.finishRefresh();
-                }
-            }
-        });
-
-        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                loadMore();
-                Toast.makeText(getActivity().getApplicationContext(), "正在加载更多", Toast
-                        .LENGTH_SHORT).show();
-                if (smartRefreshLayout.isLoading()) {
-                    smartRefreshLayout.finishLoadmore();
-                }
-            }
-        });
-        return view;
-    }
-
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadVideoData();
+        loadFriendsData();
     }
 
     @Override
@@ -106,16 +59,17 @@ public class FriendsFragment extends Fragment {
         super.onResume();
     }
 
-    public void refresh() {
+    @Override
+    public void onRefresh() {
         dataBeanList.clear();
-        loadVideoData();
+        loadFriendsData();
     }
 
     public void loadMore() {
-        loadVideoData();
+        loadFriendsData();
     }
 
-    private void loadVideoData() {
+    private void loadFriendsData() {
         String urlJoke = "http://iu.snssdk.com/neihan/stream/mix/v1/?content_type=-301";
 //                + _URL.getVideoJointUrlParameter(20 + "", mineTime + "");
 //        String urlJoke = "http://iu.snssdk" +
@@ -179,7 +133,6 @@ public class FriendsFragment extends Fragment {
                     (2, StaggeredGridLayoutManager.VERTICAL);
             recyclerViewVideo.setLayoutManager(manager);
             recyclerViewVideo.setAdapter(mAdapter);
-            EventBus.getDefault().post(new MessageEvent(NeiHanFragment.FRIEND_TASK,true));
         } else {
             mAdapter.notifyDataSetChanged();
         }
@@ -241,6 +194,59 @@ public class FriendsFragment extends Fragment {
             return dataBeenList.size();
         }
 
+    }
+
+
+    @Override
+    public void initView(View view) {
+        recyclerViewVideo = (RecyclerView) view.findViewById(R.id.recycler_view_nei_han_video);
+
+        smartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id
+                .smart_refresh_layout_video);
+
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                FriendsFragment.this.onRefresh();
+                Toast.makeText(getActivity().getApplicationContext(), "正在刷新", Toast.LENGTH_SHORT)
+                        .show();
+                if (smartRefreshLayout.isRefreshing()) {
+                    smartRefreshLayout.finishRefresh();
+                }
+            }
+        });
+
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                loadMore();
+                Toast.makeText(getActivity().getApplicationContext(), "正在加载更多", Toast
+                        .LENGTH_SHORT).show();
+                if (smartRefreshLayout.isLoading()) {
+                    smartRefreshLayout.finishLoadmore();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
+    protected void loadData() {
+        loadFriendsData();
+    }
+
+    @Override
+    protected void releaseData() {
+
+    }
+
+    @Override
+    protected int getResId() {
+        return R.layout.nei_han_video_fragment;
     }
 
 

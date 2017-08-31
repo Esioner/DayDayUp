@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.esioner.myapplication.MyApplication;
 import com.esioner.myapplication.R;
-import com.esioner.myapplication.neihan.MessageEvent;
-import com.esioner.myapplication.neihan.NeiHanFragment;
 import com.esioner.myapplication.neihan._URL;
 import com.esioner.myapplication.neihan.adapter.MyCommonRecyclerViewAdapter;
 import com.esioner.myapplication.neihan.neihanbean.neiHanBean.NeiHanBean;
@@ -26,8 +24,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -156,7 +152,6 @@ public class VideoFragment extends Fragment {
             mAdapter = new MyCommonRecyclerViewAdapter(list);
             recyclerViewVideo.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerViewVideo.setAdapter(mAdapter);
-            EventBus.getDefault().post(new MessageEvent(NeiHanFragment.VIDEO_TASK, true));
         } else {
             mAdapter.notifyDataSetChanged();
         }

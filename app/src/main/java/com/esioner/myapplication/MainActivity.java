@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         //实现透明状态栏
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
@@ -37,12 +38,8 @@ public class MainActivity extends AppCompatActivity {
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
+
         }
-
-        setContentView(R.layout.activity_main);
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.nei_han_tool_bar);
-//
 //        setSupportActionBar(toolbar);
 //
 //        ActionBar actionBar = getSupportActionBar();
